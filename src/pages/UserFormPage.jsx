@@ -1,5 +1,6 @@
-import {useForm} from 'react-hook-form'
-import {createUser} from '../api/user.api'
+import {useForm} from 'react-hook-form';
+import {createUser} from '../api/user.api';
+import {useNavigate} from 'react-router-dom';
 
 export function UserFormPage(){
     const {
@@ -7,10 +8,11 @@ export function UserFormPage(){
         handleSubmit, 
         formState: { errors },
     } = useForm()
+    const navigate = useNavigate();
 
     const onSubmit = handleSubmit(async data =>{
-        const res = await createUser(data);
-        console.log(res);
+        await createUser(data);
+        navigate("/"); {/*Aqui poner la ruta de inicio de sesion*/}
     })
 
     return(
