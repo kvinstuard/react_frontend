@@ -5,6 +5,5 @@ const userApi = axios.create({
 });
 
 export const createUser = (user) => {
-    console.log("User data to be sent:", user);
     return userApi.post("/", user);
 };
