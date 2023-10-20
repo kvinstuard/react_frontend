@@ -18,13 +18,20 @@ export function UserFormPage(){
     })
 
     return(
-        <div className='max-w-xl mx-auto'>
+        <div className='max-w-xl mx-auto border-2  border-gray-700 p-4'>
+            <h1 className='font-bold text-3xl mb-4 text-center'>Registrarte</h1>
+            <h2 className='font-ligth text-1xl mb-4 text-center'>Es rápido y fácil.</h2>
             <form onSubmit={onSubmit}>
                 <input type="email" placeholder="email"
                     {...register("correo_electronico", {required: true})}
                     className='bg-zinc-700 p-3 rounded-lg block w-full mb-3'
                     />
-                    {errors.correo_electronico && <span>Este campo es requerido</span>}      
+                    {errors.correo_electronico && <span>Este campo es requerido</span>}
+                <input type="password" placeholder="contraseña" maxLength={45}
+                    {...register("password", {required: true})}
+                    className='bg-zinc-700 p-3 rounded-lg block w-full mb-3'
+                    />
+                    {errors.password && <span>Este campo es requerido</span>}       
                 <input type="text" placeholder="nombres" maxLength={45}
                     {...register("nombres", {required: true})}
                     className='bg-zinc-700 p-3 rounded-lg block w-full mb-3'
