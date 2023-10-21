@@ -18,14 +18,14 @@ const FormRegistration = () => {
     const handleFormSubmit = (values) => {
       let data = null;
       data = {
-        correo_electronico: values.email,
+        email: values.email,
         nombres: values.firstNames,
         apellidos: values.lastNames,
-        password:values.password,
+        password: values.password,
         apodo: values.nickname,
         foto: values.picture,
       };
-      fetch("http://127.0.0.1:8000/event_expenses/api/v1/usuario/", {
+      fetch("http://127.0.0.1:8000/crear/usuario/", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(data),
