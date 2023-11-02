@@ -2,9 +2,10 @@ import { LoadingButton } from '@mui/lab';
 import { Card, Checkbox, Grid, TextField } from '@mui/material';
 import { Box, styled, useTheme } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
-import useAuth from 'app/hooks/useAuth';
 import { Formik } from 'formik';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import AuthContext from 'app/contexts/JWTAuthContext';
+import * as utils from 'app/utils/utils';
 import { NavLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -34,8 +35,8 @@ const JWTRoot = styled(JustifyBox)(() => ({
 
 // inital login credentials
 const initialValues = {
-  email: 'jason@ui-lib.com',
-  password: 'dummyPass',
+  email: 'b3@a.com',
+  password: 'ctzFXgSu',
   remember: true,
 };
 
@@ -50,16 +51,45 @@ const validationSchema = Yup.object().shape({
 const JwtLogin = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const context = useContext(AuthContext)
   const [loading, setLoading] = useState(false);
-
-  const { login } = useAuth();
 
   const handleFormSubmit = async (values) => {
     setLoading(true);
     try {
-      await login(values.email, values.password);
-      navigate('/');
+      // se configura el archivo de configuración para la solicitud
+      let body = {
+        "email": values.email,
+        "password": values.password
+      }
+
+      let config = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(body),
+      };
+
+      // se valida el inicio de sesión
+      let response = await utils.loginUser(config)
+      console.log("response:", response)
+
+      // Actualiza el contexto
+      console.log("contexto antes:",context)
+      console.log("valores: 1.",response.description.token,
+      "2." ,response.description.user_details)
+      await context.setToken(response.description.token);
+      await context.setUserDetails(response.description.user_details)
+
+      console.log("contexto despues:",context)
+
+      // se redirige al dashboard
+      // await login(values.email, values.password)
+      navigate('/dashboard');
+
     } catch (e) {
+      console.log("exception:", e)
       setLoading(false);
     }
   };
