@@ -10,6 +10,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Span } from '../../../components/Typography';
 import NotificationBar from '../../NotificationBar/NotificationBar';
+import AuthContext from 'app/contexts/JWTAuthContext'
 import ShoppingCart from '../../ShoppingCart';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
@@ -25,7 +26,7 @@ const TopbarRoot = styled('div')(({ theme }) => ({
 }));
 
 const TopbarContainer = styled(Box)(({ theme }) => ({
-  padding: '8px',
+  padding: '8px', 
   paddingLeft: 18,
   paddingRight: 20,
   height: '100%',
@@ -73,7 +74,7 @@ const IconBox = styled('div')(({ theme }) => ({
 const Layout1Topbar = () => {
   const theme = useTheme();
   const { settings, updateSettings } = useSettings();
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
   const isMdScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const updateSidebarMode = (sidebarSettings) => {
@@ -130,10 +131,10 @@ const Layout1Topbar = () => {
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    Hi <strong>{user.name}</strong>
+                    Hi <strong>{AuthContext._currentValue.user_details.user.username}</strong>
                   </Span>
                 </Hidden>
-                <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} />
+                <Avatar src={AuthContext._currentValue.user_details.foto} sx={{ cursor: 'pointer' }} />
               </UserMenu>
             }
           >

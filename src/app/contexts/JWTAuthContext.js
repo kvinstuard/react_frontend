@@ -1,14 +1,17 @@
-import React, { createContext, useEffect, useReducer } from 'react'
+import React, { createContext, useEffect, useReducer, dispatch } from 'react'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios.js'
 import { MatxLoading } from 'app/components'
 
+// acá se configura el estado inicial del contexto
+
 const initialState = {
     isAuthenticated: false,
     isInitialised: false,
-    user: null,
+    user_details: null,
+    token: null,
 }
-
+  
 const isValidToken = (accessToken) => {
     if (!accessToken) {
         return false
@@ -66,22 +69,66 @@ const reducer = (state, action) => {
                 user,
             }
         }
+        case 'SET_TOKEN': {
+            const { payload: token } = action;
+          
+            return {
+              ...state,
+              token,
+            };
+        }
+        case 'SET_USER_DETAILS': {
+            const { payload: userDetails } = action;
+            
+            return {
+                ...state,
+                user_details: userDetails,
+            };
+        }          
         default: {
             return { ...state }
         }
     }
 }
 
+// acá se configuran los atributos del contexto
+
 const AuthContext = createContext({
     ...initialState,
     method: 'JWT',
-    login: () => Promise.resolve(),
-    logout: () => { },
-    register: () => Promise.resolve(),
+    setToken: (token) => {
+        dispatch({
+            type: 'SET_TOKEN',
+            payload: token,
+          });
+    },
+    setUserDetails: (userDetails) => {
+        dispatch({
+          type: 'SET_USER_DETAILS',
+          payload: userDetails,
+        });
+    },
+    // login: () => Promise.resolve(),
+    // logout: () => { },
+    // register: () => Promise.resolve(),
 })
 
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
+
+   const setToken = (token) => {
+        dispatch({
+            type: 'SET_TOKEN',
+            payload: token,
+          });
+    }
+
+    const setUserDetails = (userDetails) => {
+        dispatch({
+          type: 'SET_USER_DETAILS',
+          payload: userDetails,
+        });
+    }
 
     const login = async (email, password) => {
         const response = await axios.post('/api/auth/login', {
@@ -174,6 +221,8 @@ export const AuthProvider = ({ children }) => {
                 method: 'JWT',
                 login,
                 logout,
+                setToken,
+                setUserDetails,
                 register,
             }}
         >
