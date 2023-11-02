@@ -18,8 +18,8 @@ const routes = [
     children: [...dashboardRoutes, ...chartsRoute, ...materialRoutes, ...contactsRoutes],
   },
   ...sessionRoutes,
-  { path: '/', element: <Navigate to="dashboard/default" /> },
-  { path : '/dashboard', element: <Navigate to="default" />},
+  { path: '/', element: <Navigate to="session/signin" /> },
+  { path: '/dashboard', element: <Navigate to="default" /> },
   { path: '*', element: <NotFound /> },
 ];
 

@@ -1,4 +1,76 @@
+import { Alert, AlertTitle } from "@mui/material";
 import { differenceInSeconds } from 'date-fns';
+
+//------------------------------------------------------------------------------
+// Este archivo contiene funciones genericas de node JS o React, es decir, aplicables a cualquier
+// formulario con JSX.
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Funciones auxiliares genericas
+//------------------------------------------------------------------------------
+
+/**
+ * Despliega en pantalla un mensaje (No se ha usado aún)
+ * @param {String} title titulo del mensaje
+ * @param {String} content contenido del mensaje
+ * @param {String} type "error", "info", "success", "warning"
+ * @param {String} id identificador del mensaje
+ * @param {Number} width ancho del mensaje
+ * @returns 
+ */
+export function enviarMensaje(title, content, type, id, width) {
+  return (
+  <Alert 
+      id = {id}
+      style = {{display: 'none'}}
+      severity = {type}
+      sx = {{ gridColumn: `span ${width}` }}
+      >
+          <AlertTitle>{title}</AlertTitle>
+          {content}
+  </Alert>
+  )
+}
+
+//------------------------------------------------------------------------------
+// Funciones auxiliares para integrar front y back-end.
+// Recordar que una solicitud por el protocolo HTTP tiene mas o menos esta
+// estructura:
+// JSON = {
+//   method: "GET" | "PUT" | "POST" | "DELETE",
+//   headers: {
+//     Authorization: `Token ${data.token}`,
+//     "Content-type": "application/json",
+//   },
+//   body: JSON.stringify(body), --> IMPORTANTE!! volver como string al JSON si 
+// se pasa al cuerpo de la solicitud
+// };
+// Los campos que no se especifiquen en alguna funcion no son necesarios.
+//------------------------------------------------------------------------------
+
+/**
+* Consulta el perfil de un usuario en la BD
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const loginUser = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/login/user/",
+    config
+  );
+  return data.json();
+};
+
+//------------------------------------------------------------------------------
+// Funciones predefinidas en la plantilla, por si las quieren usar
+//------------------------------------------------------------------------------
 
 export const convertHexToRGB = (hex) => {
   // check if it's a rgba
@@ -171,3 +243,4 @@ export const flat = (array) => {
   });
   return result;
 };
+

@@ -8,10 +8,11 @@ const userList = [
   {
     id: 1,
     role: 'SA',
-    name: 'Jason Alexander',
+    name: 'Son GOKU',
     username: 'jason_alexander',
     email: 'jason@ui-lib.com',
-    avatar: '/assets/images/face-6.jpg',
+    // avatar: '/assets/images/face-6.jpg',
+    avatar: 'https://media.tenor.com/d4wgburjy5cAAAAC/goku-que.gif',
     age: 25,
   },
 ];
