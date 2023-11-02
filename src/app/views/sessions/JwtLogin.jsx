@@ -35,8 +35,8 @@ const JWTRoot = styled(JustifyBox)(() => ({
 
 // inital login credentials
 const initialValues = {
-  email: 'b3@a.com',
-  password: 'ctzFXgSu',
+  email: 'b@b.com',
+  password: '12345678',
   remember: true,
 };
 
@@ -74,20 +74,17 @@ const JwtLogin = () => {
       // se valida el inicio de sesión
       let response = await utils.loginUser(config)
       console.log("response:", response)
-
       // Actualiza el contexto
       console.log("contexto antes:",context)
       console.log("valores: 1.",response.description.token,
       "2." ,response.description.user_details)
       await context.setToken(response.description.token);
       await context.setUserDetails(response.description.user_details)
-
       console.log("contexto despues:",context)
 
       // se redirige al dashboard
       // await login(values.email, values.password)
       navigate('/dashboard');
-
     } catch (e) {
       console.log("exception:", e)
       setLoading(false);
