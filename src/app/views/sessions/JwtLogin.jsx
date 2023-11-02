@@ -5,8 +5,9 @@ import { Paragraph } from 'app/components/Typography';
 import { Formik } from 'formik';
 import { useState, useContext } from 'react';
 import AuthContext from 'app/contexts/JWTAuthContext';
+import useAuth from 'app/hooks/useAuth';
 import * as utils from 'app/utils/utils';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from   'react-router-dom';
 import * as Yup from 'yup';
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
@@ -35,6 +36,8 @@ const JWTRoot = styled(JustifyBox)(() => ({
 
 // inital login credentials
 const initialValues = {
+  // email: 'jason@ui-lib.com',
+  // password: 'dummyPass',
   email: 'b3@a.com',
   password: 'ctzFXgSu',
   remember: true,
@@ -50,6 +53,7 @@ const validationSchema = Yup.object().shape({
 
 const JwtLogin = () => {
   const theme = useTheme();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const context = useContext(AuthContext)
   const [loading, setLoading] = useState(false);
@@ -85,7 +89,7 @@ const JwtLogin = () => {
       console.log("contexto despues:",context)
 
       // se redirige al dashboard
-      // await login(values.email, values.password)
+      await login("jason@ui-lib.com", "dummyPass")
       navigate('/dashboard');
 
     } catch (e) {
