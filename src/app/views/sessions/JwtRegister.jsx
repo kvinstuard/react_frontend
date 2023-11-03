@@ -1,6 +1,7 @@
 import { useTheme } from '@emotion/react';
 import { LoadingButton } from '@mui/lab';
 import { Card, Checkbox, Grid, TextField } from '@mui/material';
+import { Alert, Snackbar } from "@mui/material";
 import { Box, styled } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
 import useAuth from 'app/hooks/useAuth';
@@ -8,6 +9,8 @@ import { Formik } from 'formik';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import * as utils from 'app/utils/utils';
+import React from "react";
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
@@ -34,9 +37,12 @@ const JWTRegister = styled(JustifyBox)(() => ({
 
 // inital login credentials
 const initialValues = {
-  email: '',
-  password: '',
-  username: '',
+  email: 'b13@a.com',
+  nombres: 'Mario bros',
+  apellidos: 'unknown',
+  password: '123321123',
+  username: 'super mario',
+  foto: 'no tiene',
   remember: true,
 };
 
@@ -53,22 +59,77 @@ const JwtRegister = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [msgType, setMsgType] = useState("error");
 
-  const handleFormSubmit = (values) => {
+  function handleClose(_, reason) {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  }
+
+  const handleFormSubmit = async (values) => {
     setLoading(true);
 
     try {
+      // se configura el archivo de configuración para la solicitud
+      let body = {
+        "email": values.email,
+        "nombres": values.nombres,
+        "apellidos": values.apellidos,
+        "password": values.password,
+        "apodo": values.username,
+        "foto": values.foto
+      }
+      console.log("body:",body)
+
+      let config = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(body),
+      };
+
+      // se registra al usuario
+      let response = await utils.createUser(config)
+      if (response.error){
+        setOpen(true)
+        setErrMsg(response.error_cause)
+        setMsgType("error")
+        setLoading(false);
+        return ;
+      }
+      else {
+        setOpen(true)
+        setErrMsg("Registration successful!")
+        setMsgType("success")
+      }
+      console.log("response:", response)
+
+      // me vuelvo al login
       register(values.email, values.username, values.password);
       navigate('/');
+
       setLoading(false);
     } catch (e) {
       console.log(e);
+      setOpen(true)
+      setErrMsg('Error:' + e)
+      setMsgType("error")
       setLoading(false);
     }
   };
 
   return (
     <JWTRegister>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={msgType} sx={{ width: "100%" }} variant="filled">
+          {errMsg}
+        </Alert>
+      </Snackbar>
       <Card className="card">
         <Grid container>
           <Grid item sm={6} xs={12}>
@@ -104,7 +165,34 @@ const JwtRegister = () => {
                       error={Boolean(errors.username && touched.username)}
                       sx={{ mb: 3 }}
                     />
-
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="text"
+                      name="nombres"
+                      label="nombres"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.nombres}
+                      onChange={handleChange}
+                      helperText={touched.nombres && errors.nombres}
+                      error={Boolean(errors.nombres && touched.nombres)}
+                      sx={{ mb: 3 }}
+                    />
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="text"
+                      name="apellidos"
+                      label="apellidos"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.apellidos}
+                      onChange={handleChange}
+                      helperText={touched.apellidos && errors.apellidos}
+                      error={Boolean(errors.apellidos && touched.apellidos)}
+                      sx={{ mb: 3 }}
+                    />
                     <TextField
                       fullWidth
                       size="small"
@@ -132,6 +220,20 @@ const JwtRegister = () => {
                       helperText={touched.password && errors.password}
                       error={Boolean(errors.password && touched.password)}
                       sx={{ mb: 2 }}
+                    />
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="text"
+                      name="foto"
+                      label="foto"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.foto}
+                      onChange={handleChange}
+                      helperText={touched.foto && errors.foto}
+                      error={Boolean(errors.foto && touched.foto)}
+                      sx={{ mb: 3 }}
                     />
 
                     <FlexBox gap={1} alignItems="center">

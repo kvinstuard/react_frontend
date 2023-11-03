@@ -106,6 +106,82 @@ export const listContactsEvent = async (config) => {
   return data.json();
 };
 
+/**
+* Registra un usuario
+* @param {JSON} config JSON = {
+    method: "POST" | "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const createUser = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/crear/usuario/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra o Actualiza la información del usuario
+* @param {JSON} config JSON = {
+    method: "POST" | "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const updateUser = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/modificar/usuario/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Agrega un contacto al usuario
+* @param {JSON} config JSON = {
+    method: "POST" | "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const agregarContacto = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/agregar/contacto/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Elimina un contacto del usuario
+* @param {JSON} config JSON = {
+    method: "POST" | "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const eliminarContacto = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/eliminar/contacto/",
+    config
+  );
+  return data.json();
+};
+
 //------------------------------------------------------------------------------
 // Funciones predefinidas en la plantilla, por si las quieren usar
 //------------------------------------------------------------------------------
