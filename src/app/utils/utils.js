@@ -62,7 +62,7 @@ export function enviarMensaje(title, content, type, id, width) {
 */
 export const loginUser = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/login/user/",
+    "https://django-eventos.azurewebsites.net/login/user/",
     config
   );
   return data.json();
@@ -81,7 +81,7 @@ export const loginUser = async (config) => {
 */
 export const listContacts = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/listar/contactos/",
+    "https://django-eventos.azurewebsites.net/listar/contactos/",
     config
   );
   return data.json();
@@ -100,7 +100,7 @@ export const listContacts = async (config) => {
 */
 export const listContactsEvent = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/listar/contactos/evento/",
+    "https://django-eventos.azurewebsites.net/listar/contactos/evento/",
     config
   );
   return data.json();
@@ -119,7 +119,7 @@ export const listContactsEvent = async (config) => {
 */
 export const createUser = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/crear/usuario/",
+    "https://django-eventos.azurewebsites.net/crear/usuario/",
     config
   );
   return data.json();
@@ -138,7 +138,7 @@ export const createUser = async (config) => {
 */
 export const updateUser = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/modificar/usuario/",
+    "https://django-eventos.azurewebsites.net/modificar/usuario/",
     config
   );
   return data.json();
@@ -157,7 +157,7 @@ export const updateUser = async (config) => {
 */
 export const agregarContacto = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/agregar/contacto/",
+    "https://django-eventos.azurewebsites.net/agregar/contacto/",
     config
   );
   return data.json();
@@ -176,7 +176,7 @@ export const agregarContacto = async (config) => {
 */
 export const eliminarContacto = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/eliminar/contacto/",
+    "https://django-eventos.azurewebsites.net/eliminar/contacto/",
     config
   );
   return data.json();
