@@ -10,8 +10,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Span } from '../../../components/Typography';
 import NotificationBar from '../../NotificationBar/NotificationBar';
-import AuthContext from 'app/contexts/JWTAuthContext'
 import ShoppingCart from '../../ShoppingCart';
+import { useContext } from 'react';
+import { userContext } from '../../../contexts/user-context';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary,
@@ -76,6 +77,7 @@ const Layout1Topbar = () => {
   const { settings, updateSettings } = useSettings();
   const { logout } = useAuth();
   const isMdScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const context = useContext(userContext)
 
   const updateSidebarMode = (sidebarSettings) => {
     updateSettings({
@@ -131,10 +133,10 @@ const Layout1Topbar = () => {
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    Hi <strong>{AuthContext._currentValue.user_details.user.username}</strong>
+                    Hi <strong>{context.user_data.user.username}</strong>
                   </Span>
                 </Hidden>
-                <Avatar src={AuthContext._currentValue.user_details.foto} sx={{ cursor: 'pointer' }} />
+                <Avatar src={context.user_data.foto} sx={{ cursor: 'pointer' }} />
               </UserMenu>
             }
           >

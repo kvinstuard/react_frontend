@@ -11,13 +11,15 @@ const App = () => {
   const content = useRoutes(routes);
 
   return (
-    <Provider store={Store}>
-      <SettingsProvider>
-        <MatxTheme>
-          <AuthProvider>{content}</AuthProvider>
-        </MatxTheme>
-      </SettingsProvider>
-    </Provider>
+      <Provider store={Store}>
+        <SettingsProvider>
+          <MatxTheme>
+            <AuthProvider>
+              {content}
+            </AuthProvider>
+          </MatxTheme>
+        </SettingsProvider>
+      </Provider>
   );
 };
 
