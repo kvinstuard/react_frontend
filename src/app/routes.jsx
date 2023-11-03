@@ -16,7 +16,8 @@ const routes = [
         <MatxLayout />
       </AuthGuard>
     ),
-    children: [...dashboardRoutes, ...chartsRoute, ...materialRoutes, ...contactsRoutes, ...userRoutes],
+    children: [...dashboardRoutes, ...chartsRoute, ...materialRoutes, 
+               ...contactsRoutes, ...userRoutes],
   },
   ...sessionRoutes,
   { path: '/', element: <Navigate to="session/signin" /> },

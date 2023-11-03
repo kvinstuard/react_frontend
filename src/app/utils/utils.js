@@ -50,7 +50,7 @@ export function enviarMensaje(title, content, type, id, width) {
 //------------------------------------------------------------------------------
 
 /**
-* Consulta el perfil de un usuario en la BD
+* Logea a un usuario y devuelve sus datos y el token asociado
 * @param {JSON} config JSON = {
     method: "POST",
     headers: {
@@ -63,6 +63,44 @@ export function enviarMensaje(title, content, type, id, width) {
 export const loginUser = async (config) => {
   const data = await fetch(
     "http://127.0.0.1:8000/login/user/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra la lista de contactos de un usuario
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const listContacts = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/listar/contactos/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra la lista de contactos de un usuario por evento
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const listContactsEvent = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/listar/contactos/evento/",
     config
   );
   return data.json();
