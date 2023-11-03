@@ -1,5 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import { Card, Checkbox, Grid, TextField } from '@mui/material';
+import { Alert, Snackbar } from "@mui/material";
 import { Box, styled, useTheme } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
 import { Formik } from 'formik';
@@ -9,6 +10,7 @@ import useAuth from 'app/hooks/useAuth';
 import * as utils from 'app/utils/utils';
 import { NavLink, useNavigate } from   'react-router-dom';
 import * as Yup from 'yup';
+import React from "react";
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
@@ -57,6 +59,16 @@ const JwtLogin = () => {
   const navigate = useNavigate();
   const context = useContext(AuthContext)
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [msgType, setMsgType] = useState("error");
+
+  function handleClose(_, reason) {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  }
 
   const handleFormSubmit = async (values) => {
     setLoading(true);
@@ -77,6 +89,18 @@ const JwtLogin = () => {
 
       // se valida el inicio de sesión
       let response = await utils.loginUser(config)
+      if (response.error){
+        setOpen(true)
+        setErrMsg(response.error_cause)
+        setMsgType("error")
+        setLoading(false);
+        return ;
+      }
+      else {
+        setOpen(true)
+        setErrMsg("Login successful!")
+        setMsgType("success")
+      }
       console.log("response:", response)
 
       // Actualiza el contexto
@@ -94,12 +118,20 @@ const JwtLogin = () => {
 
     } catch (e) {
       console.log("exception:", e)
+      setOpen(true)
+      setErrMsg("Error:" + e)
+      setMsgType("error")
       setLoading(false);
     }
   };
 
   return (
     <JWTRoot>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={msgType} sx={{ width: "100%" }} variant="filled">
+          {errMsg}
+        </Alert>
+      </Snackbar>
       <Card className="card">
         <Grid container>
           <Grid item sm={6} xs={12}>

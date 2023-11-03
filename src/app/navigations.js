@@ -3,28 +3,21 @@ export const navigations = [
   { label: 'PAGES', type: 'label' },
   {
     name: "User's management",
-    icon: 'sentiment_satisfied',
+    icon: 'person',
     children: [
       { name: 'Sign in', iconText: 'SI', path: '/session/signin' },
       { name: 'Sign up', iconText: 'SU', path: '/session/signup' },
+      {name: 'modificar_usuario', iconText: 'SI', path: '/users/modificar'},
       // { name: 'Forgot Password', iconText: 'FP', path: '/session/forgot-password' },
       // { name: 'Error', iconText: '404', path: '/session/404' },
     ],
   },
   {
     name: 'Contacts',
-    icon: 'local_library',
+    icon: 'person_add',
     children: [
-        {name: 'saldo_contacts', iconText: 'SI', path: '/contacts/saldos'},
         {name: 'lista_contactos', iconText: 'SI', path:'/contacts/listacontactos'},
         {name: 'saldo_contacts', iconText: 'SI', path: '/contacts/saldos'},
-    ],
-  },
-  {
-    name: 'Users',
-    icon: 'local_library',
-    children: [
-        {name: 'modificar_usuario', iconText: 'SI', path: '/users/modificar'},
     ],
   },
   { label: 'Components', type: 'label' },
