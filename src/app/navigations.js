@@ -18,6 +18,13 @@ export const navigations = [
         {name: 'saldo_contacts', iconText: 'SI', path: '/contacts/saldos'},
     ],
   },
+  {
+    name: 'Users',
+    icon: 'local_library',
+    children: [
+        {name: 'modificar_usuario', iconText: 'SI', path: '/users/modificar'},
+    ],
+  },
   { label: 'Components', type: 'label' },
   {
     name: 'Components',
