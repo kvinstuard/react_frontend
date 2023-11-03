@@ -15,7 +15,16 @@ export const navigations = [
     name: 'Contacts',
     icon: 'local_library',
     children: [
-        { name: 'saldo_contacts', iconText: 'SI', path: '/contacts/saldos' },
+        {name: 'saldo_contacts', iconText: 'SI', path: '/contacts/saldos'},
+        {name: 'lista_contactos', iconText: 'SI', path:'/contacts/listacontactos'},
+        {name: 'saldo_contacts', iconText: 'SI', path: '/contacts/saldos'},
+    ],
+  },
+  {
+    name: 'Users',
+    icon: 'local_library',
+    children: [
+        {name: 'modificar_usuario', iconText: 'SI', path: '/users/modificar'},
     ],
   },
   { label: 'Components', type: 'label' },
