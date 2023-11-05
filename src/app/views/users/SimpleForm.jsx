@@ -30,6 +30,7 @@ const SimpleForm = ({ userData }) => {
     const context = useContext(userContext);
     const [loading, setLoading] = useState(false);
     const imgSize = 250;
+    const limitURL = 100;
 
     function handleClose(_, reason) {
       if (reason === "clickaway") {
@@ -59,6 +60,17 @@ const SimpleForm = ({ userData }) => {
 
   const handleSubmit = async (event) => {
     setLoading(true);
+    // validaciones iniciales
+    if (avatar != null) {
+      if(avatar.length > 100) {
+        setLoading(false);
+        setOpen(true)
+        setErrMsg("Error, image URL too large!")
+        setMsgType("error")
+        return ;
+      }
+    }
+
     // se actualizan los datos del usuario
     let is_active_bool = false;
     if (state.activo){
