@@ -42,11 +42,11 @@ const PaginationTable = ({ contactList }) => {
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Saldo</TableCell>
-            <TableCell align="center">Nombre Contacto</TableCell>
-            <TableCell align="center">Correo Contacto</TableCell>
-            <TableCell align="center">Actividad</TableCell>
-            <TableCell align="center">Evento</TableCell>
+            <TableCell align="left">Balance</TableCell>
+            <TableCell align="center">Contact's name</TableCell>
+            <TableCell align="center">Contact's Email</TableCell>
+            <TableCell align="center">Activity</TableCell>
+            <TableCell align="center">Event</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
