@@ -56,11 +56,11 @@ const ListaContactos = () => {
         <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Table" }]} />
       </Box>
     <Stack spacing={3}>
-      <SimpleCard title="Agregar contacto">
+      <SimpleCard title="Contact's management">
         <AgregarContactosForm />
       </SimpleCard>
 
-      <SimpleCard title="Lista de contactos">
+      <SimpleCard title="Contact's list">
         <PaginationContactTable contactList={contactList} />
       </SimpleCard>
     </Stack>

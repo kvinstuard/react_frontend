@@ -5,9 +5,7 @@ export const navigations = [
     name: "User's management",
     icon: 'person',
     children: [
-      { name: 'Sign in', iconText: 'SI', path: '/session/signin' },
-      { name: 'Sign up', iconText: 'SU', path: '/session/signup' },
-      {name: 'modificar_usuario', iconText: 'SI', path: '/users/modificar'},
+      {name: 'User settings', iconText: 'SI', path: '/users/modify'},
       // { name: 'Forgot Password', iconText: 'FP', path: '/session/forgot-password' },
       // { name: 'Error', iconText: '404', path: '/session/404' },
     ],
@@ -16,8 +14,8 @@ export const navigations = [
     name: 'Contacts',
     icon: 'person_add',
     children: [
-        {name: 'lista_contactos', iconText: 'SI', path:'/contacts/listacontactos'},
-        {name: 'saldo_contacts', iconText: 'SI', path: '/contacts/saldos'},
+        {name: 'Contact list', iconText: 'SI', path:'/contacts/list'},
+        {name: "Contact balance", iconText: 'SI', path: '/contacts/balance'},
     ],
   },
   { label: 'Components', type: 'label' },

@@ -5,7 +5,7 @@ const NotFound = Loadable(lazy(()=> import('./NotFound')));
 const ModificarUsuario = Loadable(lazy(()=> import('./ModificarUsuario')));
 
 const userRoutes = [
-    { path: '/users/modificar', element: <ModificarUsuario /> },
+    { path: '/users/modify', element: <ModificarUsuario /> },
     { path: '/users/404', element: <NotFound /> },
 ];
     
