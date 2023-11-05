@@ -5,12 +5,12 @@ import { Box, styled, useTheme } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
 import { Formik } from 'formik';
 import { useState, useContext } from 'react';
-import AuthContext from 'app/contexts/JWTAuthContext';
 import useAuth from 'app/hooks/useAuth';
 import * as utils from 'app/utils/utils';
 import { NavLink, useNavigate } from   'react-router-dom';
 import * as Yup from 'yup';
 import React from "react";
+import { userContext } from '../../contexts/user-context';
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
@@ -57,7 +57,7 @@ const JwtLogin = () => {
   const theme = useTheme();
   const { login } = useAuth();
   const navigate = useNavigate();
-  const context = useContext(AuthContext)
+  const context = useContext(userContext)
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -96,6 +96,13 @@ const JwtLogin = () => {
         setLoading(false);
         return ;
       }
+      else if(!response.description.user_details.user.is_active){
+        setOpen(true)
+        setErrMsg('User is currently inactive!')
+        setMsgType("error")
+        setLoading(false);
+        return ;
+      }
       else {
         setOpen(true)
         setErrMsg("Login successful!")
@@ -107,8 +114,8 @@ const JwtLogin = () => {
       console.log("contexto antes:",context)
       console.log("valores: 1.",response.description.token,
       "2." ,response.description.user_details)
-      await context.setToken(response.description.token);
-      await context.setUserDetails(response.description.user_details)
+      await context.setUserToken(response.description.token);
+      await context.setUserData(response.description.user_details)
 
       console.log("contexto despues:",context)
 

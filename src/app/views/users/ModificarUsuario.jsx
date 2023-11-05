@@ -2,8 +2,8 @@ import { Stack } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { Breadcrumb, SimpleCard } from "app/components";
 import SimpleForm from "./SimpleForm";
-import { useState, useEffect } from "react";
-import useAuth from 'app/hooks/useAuth';
+import { useState, useEffect, useContext } from "react";
+import { userContext } from "../../contexts/user-context"
 import * as utils from 'app/utils/utils';
 
 const Container = styled("div")(({ theme }) => ({
@@ -16,18 +16,18 @@ const Container = styled("div")(({ theme }) => ({
 }));
 
 const ModificarUsuario = () => {
-  const context = useAuth();
+  const context = useContext(userContext);
   const [userData, setUserData] = useState([]); // Estado para almacenar los datos de contacto
   
 
   useEffect(() => {
     const configLista = async () => {
       // Se obtienen los datos de los contactos
-      const usuario = context._currentValue;
+      const usuario = context.user_data;
       console.log("AuthContext:", usuario)
       const body = {
         // "email": usuario.user_details.user.email,
-        "email": "b3@a.com",
+        "email": usuario.user.email,
       };
 
       const config = {
@@ -49,7 +49,7 @@ const ModificarUsuario = () => {
     };
 
     configLista();
-  }, [context._currentValue]);
+  }, [context.user_data]);
 
   return (
     <Container>

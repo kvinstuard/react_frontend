@@ -9,12 +9,13 @@ import {
     TableHead,
     TablePagination,
     TableRow,
+    Avatar,
   } from "@mui/material";
   import { Alert, Snackbar } from "@mui/material";
-  import { useState } from "react";
-  import useAuth from 'app/hooks/useAuth';
+  import { useState, useContext } from "react";
   import * as utils from 'app/utils/utils';
   import React from "react";
+  import { userContext } from "../../contexts/user-context"
   
   const StyledTable = styled(Table)(() => ({
 
@@ -37,7 +38,7 @@ import {
   // ];
   
   const PaginationContactTable = ({ contactList }) => {
-    const context = useAuth();
+    const context = useContext(userContext);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -64,10 +65,10 @@ import {
     const handleDeleteContact = async (contact) => {
       console.log("Datos del contacto a eliminar:", contact);
       // Se elimina al contacto
-      let usuario = context
+      let usuario = context.user_data
       console.log("context:",usuario)
       const body = {
-        "correo_usuario": "b3@a.com",
+        "correo_usuario": usuario.user.email,
         "correo_contacto": contact.email
       }
       console.log("body:",  body)
@@ -127,7 +128,11 @@ import {
                   <TableCell align="left">{contact.nombre}</TableCell>
                   <TableCell align="center">{contact.email}</TableCell>
                   <TableCell align="center">{contact.apodo}</TableCell>
-                  <TableCell align="center">{contact.avatar}</TableCell>
+                  <TableCell align="center">
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <Avatar src={contact.avatar} />
+                    </div>
+                  </TableCell>
                   <TableCell align="right">
                     <IconButton onClick={() => handleDeleteContact(contact)}>
                       <Icon color="error">close</Icon>

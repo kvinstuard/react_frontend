@@ -6,11 +6,11 @@ import {
   } from "@mui/material";
   import { Alert, Snackbar } from "@mui/material";
   import { Span } from "app/components/Typography";
-  import { useState } from "react";
+  import { useState, useContext } from "react";
   import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
   import * as utils from 'app/utils/utils';
-  import useAuth from 'app/hooks/useAuth';
   import React from "react";
+  import { userContext } from "../../contexts/user-context"
 
   const TextField = styled(TextValidator)(() => ({
     width: "100%",
@@ -19,7 +19,7 @@ import {
   
   const AgregarContactosForm = () => {
       const [state, setState] = useState();
-      const context = useAuth()
+      const context = useContext(userContext)
       const [open, setOpen] = React.useState(false);
       const [errMsg, setErrMsg] = useState("");
       const [msgType, setMsgType] = useState("error");
@@ -32,11 +32,18 @@ import {
       }
     
       const handleSubmit = async (event) => {
+        // Se valida que el campo del correo de contacto no sea nulo
+        if (state == null) {
+          setOpen(true)
+          setErrMsg("Error, unspecified contact!")
+          setMsgType("error")
+          return ;
+        }
         // Se agrega al contacto
-        let usuario = context
+        let usuario = context.user_data
         console.log("context:",usuario)
         const body = {
-          "correo_usuario": "b3@a.com",
+          "correo_usuario": usuario.user.email,
           "correo_contacto": state.email
         }
         console.log("body:",  body)
@@ -50,13 +57,10 @@ import {
           body: JSON.stringify(body),
         };
         try {
-          console.log("test2")
           let response = await utils.agregarContacto(config)
-          console.log("test")
           if (response.error){
             setOpen(true)
-            console.log("test3", response.error_cause)
-            setErrMsg("Error, try again!")
+            setErrMsg(`Error: ${response.error_cause}`)
             setMsgType("error")
             return ;
           }
