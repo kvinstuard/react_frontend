@@ -1,18 +1,21 @@
 import {
-  Button,
+  Typography,
+  Avatar,
   Grid,
   Icon,
   styled,
   FormControlLabel,
   Switch,
 } from "@mui/material";
+import { LoadingButton } from '@mui/lab';
 import { Alert, Snackbar } from "@mui/material";
 import { Span } from "app/components/Typography";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import * as utils from 'app/utils/utils';
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { userContext } from "../../contexts/user-context"
 
 const TextField = styled(TextValidator)(() => ({
   width: "100%",
@@ -24,6 +27,9 @@ const SimpleForm = ({ userData }) => {
     const [open, setOpen] = React.useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [msgType, setMsgType] = useState("error");
+    const context = useContext(userContext);
+    const [loading, setLoading] = useState(false);
+    const imgSize = 250;
 
     function handleClose(_, reason) {
       if (reason === "clickaway") {
@@ -52,6 +58,7 @@ const SimpleForm = ({ userData }) => {
   }, [state.password]);
 
   const handleSubmit = async (event) => {
+    setLoading(true);
     // se actualizan los datos del usuario
     let is_active_bool = false;
     if (state.activo){
@@ -77,6 +84,7 @@ const SimpleForm = ({ userData }) => {
     console.log("body:", body)
     console.log("event:", event)
     let response = await utils.updateUser(config)
+    setLoading(false);
     if (response.error){
       setOpen(true)
       setErrMsg(response.error_cause)
@@ -118,12 +126,12 @@ const SimpleForm = ({ userData }) => {
             <TextField
               type="text"
               name="nombre"
-              label="Primer nombre"
+              label="First name"
               onChange={handleChange}
               value={nombre || "" + userData.nombres}
               style={{ textAlign: 'center' }}
-              //validators={["required"]}
-              //errorMessages={["this field is required"]}
+              validators={["required"]}
+              errorMessages={["this field is required"]}
             />
 
             <TextField
@@ -132,11 +140,11 @@ const SimpleForm = ({ userData }) => {
               id="standard-basic"
               value={apodo || "" + userData.apodo}
               onChange={handleChange}
-              label="Apodo"
+              label="Username"
               disabled={true}
               style={{ textAlign: 'center' }}
-              //validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
-              //errorMessages={["this field is required"]}
+              // validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
+              // errorMessages={["this field is required"]}
             />
 
             <TextField
@@ -147,8 +155,20 @@ const SimpleForm = ({ userData }) => {
               onChange={handleChange}
               disabled={true}
               style={{ textAlign: 'center' }}
-              //validators={["required"]}
-              //errorMessages={["this field is required"]}
+              validators={["required"]}
+              errorMessages={["this field is required"]}
+            />
+
+            <FormControlLabel
+                label="Active/Inactive"
+                control={
+                <Switch
+                    color="primary"
+                    value={is_active || userData.is_active}
+                    checked={state.activo}
+                    onChange={handleSwitch("activo")}
+                />
+                }
             />
           </Grid>
 
@@ -160,29 +180,25 @@ const SimpleForm = ({ userData }) => {
                 value={avatar || "" + userData.foto}
                 onChange={handleChange}
                 style={{ textAlign: 'center' }}
-                //validators={["required"]}
-                //errorMessages={["this field is required"]}
+                validators={["required"]}
+                errorMessages={["this field is required"]}
                 />
+            
+            <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'center'}}>
+              Please, insert a valid image URL.
+            </Typography>
 
-            <FormControlLabel
-                label="Estado Usuario"
-                control={
-                <Switch
-                    color="primary"
-                    value={is_active || userData.is_active}
-                    checked={state.activo}
-                    onChange={handleSwitch("activo")}
-                />
-                }
-            />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Avatar src={context.user_data.foto} sx= {{ mt: 2 }} style={{ width: imgSize, height: imgSize }}/>
+            </div>
 
           </Grid>
         </Grid>
 
-        <Button color="primary" variant="contained" type="submit">
+        <LoadingButton color="primary" variant="contained" type="submit" loading={loading}>
           <Icon>send</Icon>
           <Span sx={{ pl: 1, textTransform: "capitalize" }}>Actualizar Datos</Span>
-        </Button>
+        </LoadingButton>
       </ValidatorForm>
     </div>
   );

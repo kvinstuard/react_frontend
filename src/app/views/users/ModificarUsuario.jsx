@@ -58,7 +58,7 @@ const ModificarUsuario = () => {
       </Box>
 
       <Stack spacing={3}>
-        <SimpleCard title="Modificar datos de usuario">
+        <SimpleCard title="User settings">
           <SimpleForm userData={userData} />
         </SimpleCard>
       </Stack>

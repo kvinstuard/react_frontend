@@ -1,9 +1,9 @@
 import {
-    Button,
     Grid,
     Icon,
     styled,
   } from "@mui/material";
+  import { LoadingButton } from '@mui/lab';
   import { Alert, Snackbar } from "@mui/material";
   import { Span } from "app/components/Typography";
   import { useState, useContext } from "react";
@@ -23,6 +23,7 @@ import {
       const [open, setOpen] = React.useState(false);
       const [errMsg, setErrMsg] = useState("");
       const [msgType, setMsgType] = useState("error");
+      const [loading, setLoading] = useState(false);
 
       function handleClose(_, reason) {
         if (reason === "clickaway") {
@@ -32,8 +33,10 @@ import {
       }
     
       const handleSubmit = async (event) => {
+        setLoading(true);
         // Se valida que el campo del correo de contacto no sea nulo
         if (state == null) {
+          setLoading(false);
           setOpen(true)
           setErrMsg("Error, unspecified contact!")
           setMsgType("error")
@@ -58,6 +61,7 @@ import {
         };
         try {
           let response = await utils.agregarContacto(config)
+          setLoading(false);
           if (response.error){
             setOpen(true)
             setErrMsg(`Error: ${response.error_cause}`)
@@ -73,6 +77,7 @@ import {
         }
         catch (e) {
           console.log("exception:", e)
+          setLoading(false);
           setOpen(true)
           setErrMsg("Error:" + e)
           setMsgType("error")
@@ -99,7 +104,7 @@ import {
               <TextField
                 type="email"
                 name="email"
-                label="Correo Electrónico"
+                label="Email"
                 onChange={handleChange}
                 //validators={["required"]}
                 //errorMessages={["this field is required"]}
@@ -107,10 +112,10 @@ import {
             </Grid>
           </Grid>
   
-          <Button color="primary" variant="contained" type="submit">
+          <LoadingButton color="primary" variant="contained" type="submit" loading={loading}>
             <Icon>send</Icon>
-            <Span sx={{ pl: 1, textTransform: "capitalize" }}>Agregar Contacto</Span>
-          </Button>
+            <Span sx={{ pl: 1, textTransform: "capitalize" }}>Add contact</Span>
+          </LoadingButton>
         </ValidatorForm>
       </div>
     );

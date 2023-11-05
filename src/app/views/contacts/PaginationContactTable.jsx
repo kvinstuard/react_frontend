@@ -113,11 +113,11 @@ import {
         <StyledTable>
           <TableHead>
             <TableRow>
-              <TableCell align="left">Nombre Completo</TableCell>
-              <TableCell align="center">Correo Electrónico</TableCell>
-              <TableCell align="center">Apodo</TableCell>
+              <TableCell align="left">Full Name</TableCell>
+              <TableCell align="center">Email</TableCell>
+              <TableCell align="center">Username</TableCell>
               <TableCell align="center">Avatar</TableCell>
-              <TableCell align="right">Borrar Contacto</TableCell>
+              <TableCell align="right">Remove Contact</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
