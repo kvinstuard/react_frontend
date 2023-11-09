@@ -3,19 +3,19 @@ export const navigations = [
   { label: 'PAGES', type: 'label' },
   {
     name: "User's management",
-    icon: 'sentiment_satisfied',
+    icon: 'person',
     children: [
-      { name: 'Sign in', iconText: 'SI', path: '/session/signin' },
-      { name: 'Sign up', iconText: 'SU', path: '/session/signup' },
+      {name: 'User settings', iconText: 'SI', path: '/users/modify'},
       // { name: 'Forgot Password', iconText: 'FP', path: '/session/forgot-password' },
       // { name: 'Error', iconText: '404', path: '/session/404' },
     ],
   },
   {
     name: 'Contacts',
-    icon: 'local_library',
+    icon: 'person_add',
     children: [
-        {name: 'saldo_contacts', iconText: 'SI', path: '/contacts/saldos'},
+        {name: 'Contact list', iconText: 'SI', path:'/contacts/list'},
+        {name: "Contact balance", iconText: 'SI', path: '/contacts/balance'},
     ],
   },
   { label: 'Components', type: 'label' },

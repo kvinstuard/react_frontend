@@ -1,6 +1,7 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Stack } from "@mui/material";
 import { Breadcrumb, SimpleCard } from "app/components";
-import PaginationTable from "./PaginationTable";
+import PaginationContactTable from "./PaginationContactTable";
+import AgregarContactosForm from "./AgregarContactosForm";
 import { useState, useEffect, useContext } from "react";
 import * as utils from 'app/utils/utils';
 import { userContext } from "../../contexts/user-context";
@@ -14,9 +15,8 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-const SaldoContacts = () => {
+const ListaContactos = () => {
   const context = useContext(userContext);
-
   const [contactList, setContactList] = useState([]); // Estado para almacenar los datos de contacto
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const SaldoContacts = () => {
       };
 
       try {
-        const response = await utils.listContactsEvent(config);
+        const response = await utils.listContacts(config);
         console.log("response:", response.contactos)
         // Actualiza el estado con los datos de contacto recibidos
         setContactList(response.contactos);
@@ -49,17 +49,23 @@ const SaldoContacts = () => {
 
     configLista();
   }, [context.user_data]);
-
+  
   return (
     <Container>
       <Box className="breadcrumb">
         <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Table" }]} />
       </Box>
-      <SimpleCard title="Contact's balance">
-        <PaginationTable contactList={contactList} />
+    <Stack spacing={3}>
+      <SimpleCard title="Contact's management">
+        <AgregarContactosForm />
       </SimpleCard>
+
+      <SimpleCard title="Contact's list">
+        <PaginationContactTable contactList={contactList} />
+      </SimpleCard>
+    </Stack>
     </Container>
   );
 };
 
-export default SaldoContacts;
+export default ListaContactos;

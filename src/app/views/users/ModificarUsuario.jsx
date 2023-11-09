@@ -1,9 +1,10 @@
-import { Box, styled } from "@mui/material";
+import { Stack } from "@mui/material";
+import { Box, styled } from "@mui/system";
 import { Breadcrumb, SimpleCard } from "app/components";
-import PaginationTable from "./PaginationTable";
+import SimpleForm from "./SimpleForm";
 import { useState, useEffect, useContext } from "react";
+import { userContext } from "../../contexts/user-context"
 import * as utils from 'app/utils/utils';
-import { userContext } from "../../contexts/user-context";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
@@ -14,10 +15,10 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-const SaldoContacts = () => {
+const ModificarUsuario = () => {
   const context = useContext(userContext);
-
-  const [contactList, setContactList] = useState([]); // Estado para almacenar los datos de contacto
+  const [userData, setUserData] = useState([]); // Estado para almacenar los datos de contacto
+  
 
   useEffect(() => {
     const configLista = async () => {
@@ -38,12 +39,12 @@ const SaldoContacts = () => {
       };
 
       try {
-        const response = await utils.listContactsEvent(config);
-        console.log("response:", response.contactos)
+        const response = await utils.updateUser(config);
+        console.log("response:", response)
         // Actualiza el estado con los datos de contacto recibidos
-        setContactList(response.contactos);
+        setUserData(response);
       } catch (error) {
-        console.error("Error al obtener los contactos:", error);
+        console.error("Error al obtener los datos del usuario:", error);
       }
     };
 
@@ -53,13 +54,16 @@ const SaldoContacts = () => {
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Table" }]} />
+        <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Form" }]} />
       </Box>
-      <SimpleCard title="Contact's balance">
-        <PaginationTable contactList={contactList} />
-      </SimpleCard>
+
+      <Stack spacing={3}>
+        <SimpleCard title="User settings">
+          <SimpleForm userData={userData} />
+        </SimpleCard>
+      </Stack>
     </Container>
   );
 };
 
-export default SaldoContacts;
+export default ModificarUsuario;

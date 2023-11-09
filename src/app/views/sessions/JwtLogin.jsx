@@ -1,14 +1,16 @@
 import { LoadingButton } from '@mui/lab';
 import { Card, Checkbox, Grid, TextField } from '@mui/material';
+import { Alert, Snackbar } from "@mui/material";
 import { Box, styled, useTheme } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
 import { Formik } from 'formik';
 import { useState, useContext } from 'react';
-import AuthContext from 'app/contexts/JWTAuthContext';
 import useAuth from 'app/hooks/useAuth';
 import * as utils from 'app/utils/utils';
 import { NavLink, useNavigate } from   'react-router-dom';
 import * as Yup from 'yup';
+import React from "react";
+import { userContext } from '../../contexts/user-context';
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
@@ -55,8 +57,18 @@ const JwtLogin = () => {
   const theme = useTheme();
   const { login } = useAuth();
   const navigate = useNavigate();
-  const context = useContext(AuthContext)
+  const context = useContext(userContext)
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [msgType, setMsgType] = useState("error");
+
+  function handleClose(_, reason) {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  }
 
   const handleFormSubmit = async (values) => {
     setLoading(true);
@@ -77,13 +89,38 @@ const JwtLogin = () => {
 
       // se valida el inicio de sesión
       let response = await utils.loginUser(config)
+      if (response.error){
+        setOpen(true)
+        setErrMsg(response.error_cause)
+        setMsgType("error")
+        setLoading(false);
+        return ;
+      }
+      else if(!response.description.user_details.user.is_active){
+        setOpen(true)
+        setErrMsg('User is currently inactive!')
+        setMsgType("error")
+        setLoading(false);
+        return ;
+      }
+      else {
+        setOpen(true)
+        setErrMsg("Login successful!")
+        setMsgType("success")
+      }
       console.log("response:", response)
       // Actualiza el contexto
       console.log("contexto antes:",context)
       console.log("valores: 1.",response.description.token,
       "2." ,response.description.user_details)
+<<<<<<< HEAD
       await context.setToken(response.description.token);
       await context.setUserDetails(response.description.user_details)
+=======
+      await context.setUserToken(response.description.token);
+      await context.setUserData(response.description.user_details)
+
+>>>>>>> aa17748bb02deabed4f00062118ef8f5db4b3df6
       console.log("contexto despues:",context)
 
       // se redirige al dashboard
@@ -91,12 +128,20 @@ const JwtLogin = () => {
       navigate('/dashboard');
     } catch (e) {
       console.log("exception:", e)
+      setOpen(true)
+      setErrMsg("Error:" + e)
+      setMsgType("error")
       setLoading(false);
     }
   };
 
   return (
     <JWTRoot>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={msgType} sx={{ width: "100%" }} variant="filled">
+          {errMsg}
+        </Alert>
+      </Snackbar>
       <Card className="card">
         <Grid container>
           <Grid item sm={6} xs={12}>
