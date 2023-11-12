@@ -18,6 +18,13 @@ export const navigations = [
         {name: "Contact balance", iconText: 'SI', path: '/contacts/balance'},
     ],
   },
+  {
+    name: 'Events',
+    icon: 'store',
+    children: [
+        {name: 'Create event', iconText: 'SI', path:'/create/events'},
+    ],
+  },
   { label: 'Components', type: 'label' },
   {
     name: 'Components',

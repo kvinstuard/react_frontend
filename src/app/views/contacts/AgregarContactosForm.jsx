@@ -64,7 +64,7 @@ import {
           setLoading(false);
           if (response.error){
             setOpen(true)
-            setErrMsg(`Error: ${response.error_cause}`)
+            setErrMsg(`Error: ${JSON.stringify(response.error_cause)}`)
             setMsgType("error")
             return ;
           }

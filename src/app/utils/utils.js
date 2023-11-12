@@ -182,6 +182,26 @@ export const eliminarContacto = async (config) => {
   return data.json();
 };
 
+/**
+* Crea un evento
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const crearEvento = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/crear/evento/",
+    config
+  );
+  return data.json();
+};
+
 //------------------------------------------------------------------------------
 // Funciones predefinidas en la plantilla, por si las quieren usar
 //------------------------------------------------------------------------------
