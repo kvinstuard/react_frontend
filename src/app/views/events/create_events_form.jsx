@@ -8,10 +8,10 @@ import {
 import { LoadingButton } from '@mui/lab';
 import { Span } from "app/components/Typography";
 import { Alert, Snackbar } from "@mui/material";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import * as utils from 'app/utils/utils';
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import React from "react";
 import { userContext } from "../../contexts/user-context"
 
@@ -21,7 +21,7 @@ const TextField = styled(TextValidator)(() => ({
 }));
 
 const SimpleForm = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [state, setState] = useState({});
   const suggestions = [
     'VIAJE',

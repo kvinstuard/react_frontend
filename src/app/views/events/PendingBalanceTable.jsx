@@ -16,11 +16,11 @@ const StyledTable = styled(Table)(({ theme }) => ({
     "& tr": { "& th": { paddingLeft: 0, paddingRight: 0 } },
   },
   "& tbody": {
-    "& tr": { "& td": { paddingLeft: 0, textTransform: "capitalize" } },
+    "& tr": { "& td": { paddingLeft: 0 } },
   },
 }));
 
-const PaginationTable = ({ contactList }) => {
+const PendingBalanceTable = ({ pendingBalanceList }) => {
   
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -34,34 +34,30 @@ const PaginationTable = ({ contactList }) => {
     setPage(0);
   };
 
-  if (contactList == null){
-    return <p>No data found in contact's list!.</p>;
+  if (pendingBalanceList == null){
+    return <p>No data found in pending balance!.</p>;
   }
-  else if (contactList.length === 0) {
-    return <p>No data found in contact's list!.</p>;
+  else if (pendingBalanceList.length === 0) {
+    return <p>No data found in pending balance!.</p>;
   }
   return (
     <Box width="100%" overflow="auto">
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Balance</TableCell>
-            <TableCell align="center">Contact's name</TableCell>
-            <TableCell align="center">Contact's Email</TableCell>
-            <TableCell align="center">Activity</TableCell>
+            <TableCell align="left">Activity</TableCell>
             <TableCell align="center">Event</TableCell>
+            <TableCell align="center">Pending balance</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {contactList
+          {pendingBalanceList
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((contact, index) => (
+            .map((balance, index) => (
               <TableRow key={index}>
-                <TableCell align="left">${contact.saldo}</TableCell>
-                <TableCell align="center">{contact.nombre}</TableCell>
-                <TableCell align="center">{contact.email}</TableCell>
-                <TableCell align="center">{contact.actividad}</TableCell>
-                <TableCell align="center">{contact.evento}</TableCell>
+                <TableCell align="left">{balance.actividad}</TableCell>
+                <TableCell align="center">{balance.evento}</TableCell>
+                <TableCell align="center">${balance.saldo_pendiente}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -72,7 +68,7 @@ const PaginationTable = ({ contactList }) => {
         page={page}
         component="div"
         rowsPerPage={rowsPerPage}
-        count={contactList.length}
+        count={pendingBalanceList.length}
         onPageChange={handleChangePage}
         rowsPerPageOptions={[5, 10, 25]}
         onRowsPerPageChange={handleChangeRowsPerPage}
@@ -83,4 +79,4 @@ const PaginationTable = ({ contactList }) => {
   );
 };
 
-export default PaginationTable;
+export default PendingBalanceTable;
