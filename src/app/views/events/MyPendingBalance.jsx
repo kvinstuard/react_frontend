@@ -17,7 +17,7 @@ const Container = styled("div")(({ theme }) => ({
 
 const MyPendingBalance = () => {
   const context = useContext(userContext);
-  const [pendingBalanceList, setPendingBalanceList] = useState([]); // Estado para almacenar los datos de contacto
+  const [pendingBalanceList, setPendingBalanceList] = useState([]);
 
   useEffect(() => {
     const configLista = async () => {
@@ -38,7 +38,7 @@ const MyPendingBalance = () => {
         console.log("response:", response.eventos_actividades)
         await setPendingBalanceList(response.eventos_actividades);
       } catch (error) {
-        console.error("Error al obtener los contactos:", error);
+        console.error("Error:", error);
       }
     };
 

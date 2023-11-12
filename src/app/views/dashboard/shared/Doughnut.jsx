@@ -1,9 +1,127 @@
 import React from 'react'
 import { useTheme } from '@mui/system'
 import ReactEcharts from 'echarts-for-react'
+import { useState, useEffect, useContext } from "react";
+import * as utils from 'app/utils/utils';
+import { userContext } from "../../../contexts/user-context";
 
 const DoughnutChart = ({ height, color = [] }) => {
     const theme = useTheme()
+    const context = useContext(userContext);
+    const initialDashboardData = [
+        // {
+        //     value: 0,
+        //     name: 'Viaje',
+        // },
+        // {
+        //     value: 0,
+        //     name: 'Hogar',
+        // },
+        // {
+        //     value: 0,
+        //     name: 'Pareja',
+        // },
+        // {
+        //     value: 0,
+        //     name: 'Comida',
+        // },
+        // {
+        //     value: 1,
+        //     name: 'Otro',
+        // },
+    ]
+    const [dashboardData, setDashBoardData] = useState(initialDashboardData); 
+    // const dummyData = [
+    //     {
+    //         value: 90,
+    //         name: 'Google',
+    //     },
+    //     {
+    //         value: 5,
+    //         name: 'Facebook',
+    //     },
+    //     { value: 5, name: 'Others' },
+    // ]
+
+    useEffect(() => {
+        async function fetchData() {
+          // Se obtienen los datos básicos del gráfico
+          const usuario = context.user_data;
+          console.log("AuthContext:", usuario)
+    
+          const config = {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${context.token}`,
+              "Content-type": "application/json",
+            },
+          };
+    
+          try {
+            const response = await utils.verEventosActividadesParticipante(config);
+            console.log("response:", response)
+
+            if (!response.error) {
+                // Se refinan los datos obtenidos antes de almacenarlos
+                // En este caso vamos a contar cuantos eventos hay por cada tipo
+                let count_viaje = 0;
+                let count_hogar = 0;
+                let count_pareja = 0;
+                let count_comida = 0;
+                let count_otro = 0;
+                for(let i=0; i < response.actividades_en_que_participa.length; i++) {
+                    // eventos tipo: 'VIAJE'
+                    if (response.actividades_en_que_participa[i].evento_tipo === "VIAJE") count_viaje++;
+                    // eventos tipo: 'HOGAR'
+                    if (response.actividades_en_que_participa[i].evento_tipo === "HOGAR") count_hogar++;
+                    // eventos tipo: 'PAREJA'
+                    if (response.actividades_en_que_participa[i].evento_tipo === "PAREJA") count_pareja++;
+                    // eventos tipo: 'COMIDA'
+                    if (response.actividades_en_que_participa[i].evento_tipo === "COMIDA") count_comida++;
+                    // eventos tipo: 'OTRO'
+                    if (response.actividades_en_que_participa[i].evento_tipo === "OTRO") count_otro++;
+                }
+                let final_data = [
+                    {
+                        value: count_viaje,
+                        name: 'Viaje',
+                    },
+                    {
+                        value: count_hogar,
+                        name: 'Hogar',
+                    },
+                    {
+                        value: count_pareja,
+                        name: 'Pareja',
+                    },
+                    {
+                        value: count_comida,
+                        name: 'Comida',
+                    },
+                    {
+                        value: count_otro,
+                        name: 'Otro',
+                    },
+                ]
+                // Ahora guardamos los datos
+                // Validamos si hay eventos en los que participa.
+                if (count_viaje === 0 && count_hogar === 0 && count_pareja === 0 && count_comida === 0 && count_otro === 0) {
+                        await setDashBoardData(initialDashboardData);    
+                    }
+                else {
+                    await setDashBoardData(final_data);
+                }
+            }
+            else {
+                console.error("Error:", response.error);    
+                await setDashBoardData(initialDashboardData)
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }
+        fetchData()
+    });
 
     const option = {
         legend: {
@@ -45,10 +163,10 @@ const DoughnutChart = ({ height, color = [] }) => {
 
         series: [
             {
-                name: 'Traffic Rate',
+                name: 'No data found!',
                 type: 'pie',
                 radius: ['45%', '72.55%'],
-                center: ['50%', '50%'],
+                center: ['50%', '43%'],
                 avoidLabelOverlap: false,
                 hoverOffset: 5,
                 stillShowZeroSum: false,
@@ -78,17 +196,7 @@ const DoughnutChart = ({ height, color = [] }) => {
                         show: false,
                     },
                 },
-                data: [
-                    {
-                        value: 65,
-                        name: 'Google',
-                    },
-                    {
-                        value: 20,
-                        name: 'Facebook',
-                    },
-                    { value: 15, name: 'Others' },
-                ],
+                data: dashboardData,
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -105,7 +213,8 @@ const DoughnutChart = ({ height, color = [] }) => {
             style={{ height: height }}
             option={{
                 ...option,
-                color: [...color],
+                // color: [...color],
+                color: ['#FF6F61', '#6B4226', '#DAC292', '#5A5A5A', '#8AA29E'],
             }}
         />
     )

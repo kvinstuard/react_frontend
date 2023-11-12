@@ -241,6 +241,44 @@ export const pagarActividadEvento = async (config) => {
   return data.json();
 };
 
+/**
+* Obtiene datos básicos, necesarios para el dashboard
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const obtenerDatosDashboard = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/dashboard/data/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Esta vista muestra en cuales actividades y eventos el usuario participa.
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verEventosActividadesParticipante = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/events-activities-as-participant/",
+    config
+  );
+  return data.json();
+};
+
 //------------------------------------------------------------------------------
 // Funciones predefinidas en la plantilla, por si las quieren usar
 //------------------------------------------------------------------------------

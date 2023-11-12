@@ -1,20 +1,38 @@
 import {
-  Avatar,
   Box,
   Card,
-  Icon,
-  IconButton,
-  MenuItem,
-  Select,
   styled,
   Table,
   TableBody,
   TableCell,
+  Fab,
+  Icon,
   TableHead,
   TableRow,
-  useTheme,
+  TablePagination,
 } from '@mui/material';
-import { Paragraph } from 'app/components/Typography';
+import { useState, useEffect, useContext } from "react";
+import * as utils from 'app/utils/utils';
+import { userContext } from "../../../contexts/user-context";
+
+const StarOutline = styled(Fab)(() => ({
+  marginLeft: 0,
+  boxShadow: 'none',
+  color: '#ff9e00 !important',
+  backgroundColor: '#fefd95 !important',
+  cursor: 'default',
+}));
+
+const StyledTable = styled(Table)(({ theme }) => ({
+  
+  whiteSpace: "pre",
+  "& thead": {
+    "& tr": { "& th": { paddingLeft: 0, paddingRight: 0 } },
+  },
+  "& tbody": {
+    "& tr": { "& td": { paddingLeft: 0 } },
+  },
+}));
 
 const CardHeader = styled(Box)(() => ({
   display: 'flex',
@@ -31,136 +49,103 @@ const Title = styled('span')(() => ({
   textTransform: 'capitalize',
 }));
 
-const ProductTable = styled(Table)(() => ({
-  minWidth: 400,
-  whiteSpace: 'pre',
-  '& small': {
-    width: 50,
-    height: 15,
-    borderRadius: 500,
-    boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24)',
-  },
-  '& td': { borderBottom: 'none' },
-  '& td:first-of-type': { paddingLeft: '16px !important' },
-}));
-
-const Small = styled('small')(({ bgcolor }) => ({
-  width: 50,
-  height: 15,
-  color: '#fff',
-  padding: '2px 8px',
-  borderRadius: '4px',
-  overflow: 'hidden',
-  background: bgcolor,
-  boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24)',
-}));
-
 const TopSellingTable = () => {
-  const { palette } = useTheme();
-  const bgError = palette.error.main;
-  const bgPrimary = palette.primary.main;
-  const bgSecondary = palette.secondary.main;
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const context = useContext(userContext);
+  const [pendingBalanceList, setPendingBalanceList] = useState([]); 
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+  
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+ 
+  useEffect(() => {
+    async function fetchData() {
+      // Se obtienen los saldos pendientes del usuario
+      const usuario = context.user_data;
+      console.log("AuthContext:", usuario)
+
+      const config = {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${context.token}`,
+          "Content-type": "application/json",
+        },
+      };
+
+      try {
+        const response = await utils.verSaldosPendientes(config);
+        console.log("response:", response)
+        if (!response.error) {
+          await setPendingBalanceList(response.eventos_actividades);
+        }
+        else {
+          console.error("Error:", response.error);    
+          await setPendingBalanceList([{actividad: 'Not Found!', evento: 'Not Found!', saldo_pendiente: '0'}])
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+    fetchData()
+  }, [context.token, context.user_data]);
 
   return (
     <Card elevation={3} sx={{ pt: '20px', mb: 3 }}>
       <CardHeader>
-        <Title>top selling products</Title>
-        <Select size="small" defaultValue="this_month">
-          <MenuItem value="this_month">This Month</MenuItem>
-          <MenuItem value="last_month">Last Month</MenuItem>
-        </Select>
+        <Title>Pending Balance</Title>
+        <StarOutline size="small">
+          <Icon>warning</Icon>
+        </StarOutline>
+        <StarOutline size="small" sx={{ backgroundColor: 'rgba(9, 182, 109, 0.15) !important' }}>
+          <Icon sx={{ color: '#08ad6c' }}>monetization_on</Icon>
+        </StarOutline>
       </CardHeader>
 
       <Box overflow="auto">
-        <ProductTable>
+        <StyledTable>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ px: 3 }} colSpan={4}>
-                Name
-              </TableCell>
-              <TableCell sx={{ px: 0 }} colSpan={2}>
-                Revenue
-              </TableCell>
-              <TableCell sx={{ px: 0 }} colSpan={2}>
-                Stock Status
-              </TableCell>
-              <TableCell sx={{ px: 0 }} colSpan={1}>
-                Action
-              </TableCell>
+              <TableCell align="center">Activity</TableCell>
+              <TableCell align="center">Event</TableCell>
+              <TableCell align="center">Pending balance</TableCell>
+              <TableCell align="center">Total balance</TableCell>
             </TableRow>
           </TableHead>
-
           <TableBody>
-            {productList.map((product, index) => (
-              <TableRow key={index} hover>
-                <TableCell colSpan={4} align="left" sx={{ px: 0, textTransform: 'capitalize' }}>
-                  <Box display="flex" alignItems="center">
-                    <Avatar src={product.imgUrl} />
-                    <Paragraph sx={{ m: 0, ml: 4 }}>{product.name}</Paragraph>
-                  </Box>
-                </TableCell>
-
-                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: 'capitalize' }}>
-                  ${product.price > 999 ? (product.price / 1000).toFixed(1) + 'k' : product.price}
-                </TableCell>
-
-                <TableCell sx={{ px: 0 }} align="left" colSpan={2}>
-                  {product.available ? (
-                    product.available < 20 ? (
-                      <Small bgcolor={bgSecondary}>{product.available} available</Small>
-                    ) : (
-                      <Small bgcolor={bgPrimary}>in stock</Small>
-                    )
-                  ) : (
-                    <Small bgcolor={bgError}>out of stock</Small>
-                  )}
-                </TableCell>
-
-                <TableCell sx={{ px: 0 }} colSpan={1}>
-                  <IconButton>
-                    <Icon color="primary">edit</Icon>
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+            {pendingBalanceList
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((balance, index) => (
+                <TableRow key={index}>
+                  <TableCell align="center">{balance.actividad}</TableCell>
+                  <TableCell align="center">{balance.evento}</TableCell>
+                  <TableCell align="center">${balance.saldo_pendiente}</TableCell>
+                  <TableCell align="center">${balance.saldo_total}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
-        </ProductTable>
+        </StyledTable>
+
+        <TablePagination
+          sx={{ px: 2 }}
+          page={page}
+          component="div"
+          rowsPerPage={rowsPerPage}
+          count={pendingBalanceList.length}
+          onPageChange={handleChangePage}
+          rowsPerPageOptions={[5, 10, 25]}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          nextIconButtonProps={{ "aria-label": "Next Page" }}
+          backIconButtonProps={{ "aria-label": "Previous Page" }}
+        />
       </Box>
     </Card>
   );
 };
-
-const productList = [
-  {
-    imgUrl: '/assets/images/products/headphone-2.jpg',
-    name: 'earphone',
-    price: 100,
-    available: 15,
-  },
-  {
-    imgUrl: '/assets/images/products/headphone-3.jpg',
-    name: 'earphone',
-    price: 1500,
-    available: 30,
-  },
-  {
-    imgUrl: '/assets/images/products/iphone-2.jpg',
-    name: 'iPhone x',
-    price: 1900,
-    available: 35,
-  },
-  {
-    imgUrl: '/assets/images/products/iphone-1.jpg',
-    name: 'iPhone x',
-    price: 100,
-    available: 0,
-  },
-  {
-    imgUrl: '/assets/images/products/headphone-3.jpg',
-    name: 'Head phone',
-    price: 1190,
-    available: 5,
-  },
-];
 
 export default TopSellingTable;

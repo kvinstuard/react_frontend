@@ -45,9 +45,10 @@ const PendingBalanceTable = ({ pendingBalanceList }) => {
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Activity</TableCell>
+            <TableCell align="center">Activity</TableCell>
             <TableCell align="center">Event</TableCell>
             <TableCell align="center">Pending balance</TableCell>
+            <TableCell align="center">Total balance</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -55,9 +56,10 @@ const PendingBalanceTable = ({ pendingBalanceList }) => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((balance, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{balance.actividad}</TableCell>
+                <TableCell align="center">{balance.actividad}</TableCell>
                 <TableCell align="center">{balance.evento}</TableCell>
                 <TableCell align="center">${balance.saldo_pendiente}</TableCell>
+                <TableCell align="center">${balance.saldo_total}</TableCell>
               </TableRow>
             ))}
         </TableBody>
