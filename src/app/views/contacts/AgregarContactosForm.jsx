@@ -106,8 +106,6 @@ import {
                 name="email"
                 label="Email"
                 onChange={handleChange}
-                validators={["required"]}
-                errorMessages={["this field is required"]}
               />
             </Grid>
           </Grid>

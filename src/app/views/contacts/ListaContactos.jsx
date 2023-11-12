@@ -53,7 +53,7 @@ const ListaContactos = () => {
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Table" }]} />
+        <Breadcrumb routeSegments={[{ name: "Contacts", path: "/contacts/list" }, { name: "List" }]} />
       </Box>
     <Stack spacing={3}>
       <SimpleCard title="Contact's management">

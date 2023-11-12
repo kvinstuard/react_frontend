@@ -45,15 +45,10 @@ const MyPendingBalance = () => {
     configLista();
   }, [context.user_data, context.token]);
   
-  // Renderizar solo si la carga ha finalizado
-  if (pendingBalanceList == null) {
-    return <p>Loading...</p>; // Puedes mostrar un indicador de carga mientras se obtienen los datos
-  }  
-
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Table" }]} />
+        <Breadcrumb routeSegments={[{ name: "Events", path: "/my-pending/balance" }, { name: "Balance" }]} />
       </Box>
     <Stack spacing={3}>
       <SimpleCard title="Payment form">
