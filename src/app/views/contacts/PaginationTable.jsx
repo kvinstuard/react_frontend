@@ -50,6 +50,7 @@ const PaginationTable = ({ contactList }) => {
             <TableCell align="center">Contact's Email</TableCell>
             <TableCell align="center">Activity</TableCell>
             <TableCell align="center">Event</TableCell>
+            <TableCell align="center">Accepted</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,6 +63,7 @@ const PaginationTable = ({ contactList }) => {
                 <TableCell align="center">{contact.email}</TableCell>
                 <TableCell align="center">{contact.actividad}</TableCell>
                 <TableCell align="center">{contact.evento}</TableCell>
+                <TableCell align="center">{contact.aceptado}</TableCell>
               </TableRow>
             ))}
         </TableBody>

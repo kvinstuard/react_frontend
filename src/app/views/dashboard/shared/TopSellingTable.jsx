@@ -115,6 +115,7 @@ const TopSellingTable = () => {
               <TableCell align="center">Event</TableCell>
               <TableCell align="center">Pending balance</TableCell>
               <TableCell align="center">Total balance</TableCell>
+              <TableCell align="center">Accepted</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -126,6 +127,7 @@ const TopSellingTable = () => {
                   <TableCell align="center">{balance.evento}</TableCell>
                   <TableCell align="center">${balance.saldo_pendiente}</TableCell>
                   <TableCell align="center">${balance.saldo_total}</TableCell>
+                  <TableCell align="center">{balance.aceptado}</TableCell>
                 </TableRow>
               ))}
           </TableBody>

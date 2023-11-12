@@ -16,7 +16,7 @@ const DoughnutChart = ({ height, color = [] }) => {
         // {
         //     value: 0,
         //     name: 'Hogar',
-        // },
+        // },   
         // {
         //     value: 0,
         //     name: 'Pareja',
