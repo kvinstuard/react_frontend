@@ -30,7 +30,7 @@ const SimpleForm = ({ userData }) => {
     const context = useContext(userContext);
     const [loading, setLoading] = useState(false);
     const imgSize = 250;
-    const limitURL = 100;
+    const limitURL = 3100;
 
     function handleClose(_, reason) {
       if (reason === "clickaway") {
@@ -62,7 +62,7 @@ const SimpleForm = ({ userData }) => {
     setLoading(true);
     // validaciones iniciales
     if (avatar != null) {
-      if(avatar.length > 100) {
+      if(avatar.length > limitURL) {
         setLoading(false);
         setOpen(true)
         setErrMsg("Error, image URL too large!")
@@ -99,7 +99,7 @@ const SimpleForm = ({ userData }) => {
     setLoading(false);
     if (response.error){
       setOpen(true)
-      setErrMsg(response.error_cause)
+      setErrMsg(`Error: ${JSON.stringify(response.error_cause)}`)
       setMsgType("error")
       return ;
     }
@@ -209,7 +209,7 @@ const SimpleForm = ({ userData }) => {
 
         <LoadingButton color="primary" variant="contained" type="submit" loading={loading}>
           <Icon>send</Icon>
-          <Span sx={{ pl: 1, textTransform: "capitalize" }}>Actualizar Datos</Span>
+          <Span sx={{ pl: 1, textTransform: "capitalize" }}>Update User</Span>
         </LoadingButton>
       </ValidatorForm>
     </div>

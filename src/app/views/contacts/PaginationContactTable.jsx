@@ -84,7 +84,7 @@ import {
         let response = await utils.eliminarContacto(config)
         if (response.error){
           setOpen(true)
-          setErrMsg(response.error_cause)
+          setErrMsg(`Error: ${JSON.stringify(response.error_cause)}`)
           setMsgType("error")
           return ;
         }
