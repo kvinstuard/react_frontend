@@ -53,7 +53,7 @@ const SaldoContacts = () => {
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Table" }]} />
+        <Breadcrumb routeSegments={[{ name: "Contacts", path: "/contacts/balance" }, { name: "Balance" }]} />
       </Box>
       <SimpleCard title="Contact's balance">
         <PaginationTable contactList={contactList} />

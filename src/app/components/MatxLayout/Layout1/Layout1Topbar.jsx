@@ -1,16 +1,18 @@
 import { Avatar, Hidden, Icon, IconButton, MenuItem, useMediaQuery } from '@mui/material';
 import { Box, styled, useTheme } from '@mui/system';
-import { MatxMenu, MatxSearchBox } from 'app/components';
+import { MatxMenu, 
+  // MatxSearchBox 
+} from 'app/components';
 import { themeShadows } from 'app/components/MatxTheme/themeColors';
-import { NotificationProvider } from 'app/contexts/NotificationContext';
+// import { NotificationProvider } from 'app/contexts/NotificationContext';
 import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
 import { topBarHeight } from 'app/utils/constant';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Span } from '../../../components/Typography';
-import NotificationBar from '../../NotificationBar/NotificationBar';
-import ShoppingCart from '../../ShoppingCart';
+// import NotificationBar from '../../NotificationBar/NotificationBar';
+// import ShoppingCart from '../../ShoppingCart';
 import { useContext } from 'react';
 import { userContext } from '../../../contexts/user-context';
 
@@ -67,10 +69,10 @@ const StyledItem = styled(MenuItem)(({ theme }) => ({
   '& span': { marginRight: '10px', color: theme.palette.text.primary },
 }));
 
-const IconBox = styled('div')(({ theme }) => ({
-  display: 'inherit',
-  [theme.breakpoints.down('md')]: { display: 'none !important' },
-}));
+// const IconBox = styled('div')(({ theme }) => ({
+//   display: 'inherit',
+//   [theme.breakpoints.down('md')]: { display: 'none !important' },
+// }));
 
 const Layout1Topbar = () => {
   const theme = useTheme();
@@ -104,7 +106,7 @@ const Layout1Topbar = () => {
             <Icon>menu</Icon>
           </StyledIconButton>
 
-          <IconBox>
+          {/* <IconBox>
             <StyledIconButton>
               <Icon>mail_outline</Icon>
             </StyledIconButton>
@@ -116,17 +118,17 @@ const Layout1Topbar = () => {
             <StyledIconButton>
               <Icon>star_outline</Icon>
             </StyledIconButton>
-          </IconBox>
+          </IconBox> */}
         </Box>
 
         <Box display="flex" alignItems="center">
-          <MatxSearchBox />
+          {/* <MatxSearchBox /> */}
 
-          <NotificationProvider>
+          {/* <NotificationProvider>
             <NotificationBar />
-          </NotificationProvider>
+          </NotificationProvider> */}
 
-          <ShoppingCart />
+          {/* <ShoppingCart /> */}
 
           <MatxMenu
             menuButton={
@@ -141,22 +143,17 @@ const Layout1Topbar = () => {
             }
           >
             <StyledItem>
-              <Link to="/">
+              <Link to="/dashboard">
                 <Icon> home </Icon>
                 <Span> Home </Span>
               </Link>
             </StyledItem>
 
             <StyledItem>
-              <Link to="/page-layouts/user-profile">
-                <Icon> person </Icon>
-                <Span> Profile </Span>
+              <Link to="/users/modify">
+                <Icon> settings </Icon>
+                <Span> Settings </Span>
               </Link>
-            </StyledItem>
-
-            <StyledItem>
-              <Icon> settings </Icon>
-              <Span> Settings </Span>
             </StyledItem>
 
             <StyledItem onClick={logout}>

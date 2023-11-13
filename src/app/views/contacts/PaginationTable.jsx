@@ -45,11 +45,12 @@ const PaginationTable = ({ contactList }) => {
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Balance</TableCell>
-            <TableCell align="center">Contact's name</TableCell>
+            <TableCell align="left">Pending Balance</TableCell>
+            <TableCell align="center">Contact's Name</TableCell>
             <TableCell align="center">Contact's Email</TableCell>
             <TableCell align="center">Activity</TableCell>
             <TableCell align="center">Event</TableCell>
+            <TableCell align="center">Accepted</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -57,11 +58,12 @@ const PaginationTable = ({ contactList }) => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((contact, index) => (
               <TableRow key={index}>
-                <TableCell align="left">${contact.saldo}</TableCell>
+                <TableCell align="left">${contact.saldo_pendiente}</TableCell>
                 <TableCell align="center">{contact.nombre}</TableCell>
                 <TableCell align="center">{contact.email}</TableCell>
                 <TableCell align="center">{contact.actividad}</TableCell>
                 <TableCell align="center">{contact.evento}</TableCell>
+                <TableCell align="center">{contact.aceptado}</TableCell>
               </TableRow>
             ))}
         </TableBody>

@@ -17,7 +17,7 @@ const Container = styled("div")(({ theme }) => ({
 
 const MyPendingBalance = () => {
   const context = useContext(userContext);
-  const [pendingBalanceList, setPendingBalanceList] = useState([]); // Estado para almacenar los datos de contacto
+  const [pendingBalanceList, setPendingBalanceList] = useState([]);
 
   useEffect(() => {
     const configLista = async () => {
@@ -38,22 +38,17 @@ const MyPendingBalance = () => {
         console.log("response:", response.eventos_actividades)
         await setPendingBalanceList(response.eventos_actividades);
       } catch (error) {
-        console.error("Error al obtener los contactos:", error);
+        console.error("Error:", error);
       }
     };
 
     configLista();
   }, [context.user_data, context.token]);
   
-  // Renderizar solo si la carga ha finalizado
-  if (pendingBalanceList == null) {
-    return <p>Loading...</p>; // Puedes mostrar un indicador de carga mientras se obtienen los datos
-  }  
-
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Table" }]} />
+        <Breadcrumb routeSegments={[{ name: "Events", path: "/my-pending/balance" }, { name: "Balance" }]} />
       </Box>
     <Stack spacing={3}>
       <SimpleCard title="Payment form">
