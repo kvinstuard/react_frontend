@@ -23,6 +23,7 @@ export const navigations = [
     icon: 'store',
     children: [
         {name: 'Create event', iconText: 'SI', path:'/create/events'},
+        {name: 'My pending balance', iconText: 'SI', path:'/my-pending/balance'},
     ],
   },
   { label: 'Components', type: 'label' },

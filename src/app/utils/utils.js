@@ -202,6 +202,45 @@ export const crearEvento = async (config) => {
   return data.json();
 };
 
+/**
+* Obtiene los saldos pendientes de un usuario.
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verSaldosPendientes = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/pending-balance/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Paga un saldo pendiente parcial o totalmente de una actividad.
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const pagarActividadEvento = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/pay/activity-event/",
+    config
+  );
+  return data.json();
+};
+
 //------------------------------------------------------------------------------
 // Funciones predefinidas en la plantilla, por si las quieren usar
 //------------------------------------------------------------------------------
