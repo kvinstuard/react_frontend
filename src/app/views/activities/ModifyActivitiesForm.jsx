@@ -39,14 +39,14 @@ import {
   
       // se configura el cuerpo de la consulta para crear el evento en la BD
       const body = {
+        "descripcion": activityNewDescription,
+        "antigua_descripcion": activityOldDescription,
         "valor": Number(activityValor),
-        "descripcion": activityDescription,
-        "nombre_evento": eventName,
       };
       
       console.log("context:", context)
       const config = {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: `Token ${context.token}`,
           "Content-type": "application/json",
@@ -56,7 +56,7 @@ import {
       console.log("body:", body)
       console.log("event:", activity)
       try {
-        let response = await utils.crearActividad(config)
+        let response = await utils.modificarActividad(config)
         setLoading(false);
         if (response.error){
           setOpen(true)
@@ -66,7 +66,7 @@ import {
         }
         else {
           setOpen(true)
-          setErrMsg("Activity created successfully!")
+          setErrMsg("Activity modified successfully!")
           setMsgType("success")
         }
         // navigate("/")
@@ -90,8 +90,8 @@ import {
   
     const {
       activityValor,
-      activityDescription,
-      eventName,
+      activityNewDescription,
+      activityOldDescription,
     } = state;
   
     return (
@@ -107,10 +107,10 @@ import {
   
               <TextField
                 type="text"
-                name="activityDescription"
-                label="Activity Description"
+                name="activityNewDescription"
+                label="New Description"
                 onChange={handleChange}
-                value={activityDescription || ""}
+                value={activityNewDescription || ""}
                 validators={["required"]}
                 errorMessages={["this field is required"]}
               />
@@ -131,10 +131,10 @@ import {
               
             <TextField
                 type="text"
-                name="eventName"
-                label="Name of Event"
+                name="activityOldDescription"
+                label="Old Description"
                 onChange={handleChange}
-                value={eventName || ""}
+                value={activityOldDescription || ""}
                 validators={["required"]}
                 errorMessages={["this field is required"]}
               />
@@ -144,7 +144,7 @@ import {
   
           <LoadingButton color="primary" variant="contained" type="submit" loading={loading}>
             <Icon>send</Icon>
-            <Span sx={{ pl: 1, textTransform: "capitalize" }}>Create Activity</Span>
+            <Span sx={{ pl: 1, textTransform: "capitalize" }}>Modify Activity</Span>
           </LoadingButton>
         </ValidatorForm>
       </div>

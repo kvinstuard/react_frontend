@@ -1,0 +1,41 @@
+import { Stack, Typography } from "@mui/material";
+import { Box, styled } from "@mui/system";
+import { Breadcrumb, SimpleCard } from "app/components";
+import ModifyActivitiesForm from "./ModifyActivitiesForm";
+import ModifyActivitiesTable from "./ModifyActivitiesTable";
+
+const Container = styled("div")(({ theme }) => ({
+  margin: "30px",
+  [theme.breakpoints.down("sm")]: { margin: "16px" },
+  "& .breadcrumb": {
+    marginBottom: "30px",
+    [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
+  },
+}));
+
+const CrearActividad = () => {
+
+  return (
+    <Container>
+      <Box className="breadcrumb">
+        <Breadcrumb routeSegments={[{ name: "Activity", path: "/modify/activities" }, { name: "Modify" }]} />
+      </Box>
+
+      <Stack spacing={3}>
+        <SimpleCard title="Modify Activities Form">
+          <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'left'}}>
+            NOTE: if you don't want to modify activity's description or another field, just copy 
+            and past the same value in the corresponding field. Please don't type blank spaces.
+          </Typography>
+          <ModifyActivitiesForm />
+        </SimpleCard>
+
+        <SimpleCard title="All activities of all user events">
+          <ModifyActivitiesTable/>
+        </SimpleCard>
+      </Stack>
+    </Container>
+  );
+};
+
+export default CrearActividad;

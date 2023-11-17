@@ -52,7 +52,7 @@ const PendingBalanceTable = () => {
       };
 
       try {
-        const response = await utils.verTodasLasActividadesDeEventos(config);
+        const response = await utils.verTodasLosParticipantesDeEventos(config);
         console.log("response:", response.eventos_creados)
         await setCreatedEvents(response.eventos_creados);
       } catch (error) {
