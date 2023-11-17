@@ -26,7 +26,7 @@ const CrearActividad = () => {
           <CreateActivitiesForm />
         </SimpleCard>
 
-        <SimpleCard title="Event's Activities List">
+        <SimpleCard title="All activities of all user events">
           <PaginationActivitiesTable/>
         </SimpleCard>
       </Stack>
