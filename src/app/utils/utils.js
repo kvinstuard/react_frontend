@@ -279,6 +279,30 @@ export const verEventosActividadesParticipante = async (config) => {
   return data.json();
 };
 
+export const crearActividad = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/create/activity/",
+    config
+  );
+  return data.json()
+};
+
+export const eliminarActividad = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/delete/activity/",
+    config
+  );
+  return data.json()
+};
+
+export const verActividadesEventos = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/activities/event/",
+    config
+  );
+  return data.json();
+};
+
 /**
 * Modifica un evento
 * @param {JSON} config JSON = {
