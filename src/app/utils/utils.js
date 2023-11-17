@@ -280,6 +280,66 @@ export const verEventosActividadesParticipante = async (config) => {
 };
 
 /**
+* Esta vista es para crear actividades.
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const crearActividad = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/create/activity/",
+    config
+  );
+  return data.json()
+};
+
+/**
+* Esta vista es para crear actividades.
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const modificarActividad = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/modify/activity/",
+    config
+  );
+  return data.json()
+};
+
+/**
+* Esta vista es para crear actividades.
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const eliminarActividad = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/delete/activity/",
+    config
+  );
+  return data.json()
+};
+
+/**
 * Modifica un evento
 * @param {JSON} config JSON = {
     method: "PUT",
@@ -353,6 +413,25 @@ export const agregarParticipante = async (config) => {
 export const verTodasLasActividadesDeEventos = async (config) => {
   const data = await fetch(
     "http://127.0.0.1:8000/view/all-activities-event/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra todas las actividades de todos los eventos creados de un usuario
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verTodasLosParticipantesDeEventos = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/all-participants-event/",
     config
   );
   return data.json();

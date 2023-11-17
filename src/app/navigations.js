@@ -32,8 +32,10 @@ export const navigations = [
   },
   {
     name: 'Activities',
-    icon: 'local_activity',
+    icon: 'camera',
     children: [
+        {name: 'Create activity', iconText: 'SI', path:'/create/activities'},
+        {name: 'Modify activity', iconText: 'SI', path:'/modify/activities'},
         {name: 'Accept activities', iconText: 'SI', path:'/accept/activities'},
     ],
   },
