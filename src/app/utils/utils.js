@@ -196,7 +196,7 @@ export const eliminarContacto = async (config) => {
 */
 export const crearEvento = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/crear/evento/",
+    "https://django-eventos.azurewebsites.net/crear/evento/",
     config
   );
   return data.json();
@@ -215,7 +215,7 @@ export const crearEvento = async (config) => {
 */
 export const verSaldosPendientes = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/view/pending-balance/",
+    "https://django-eventos.azurewebsites.net/view/pending-balance/",
     config
   );
   return data.json();
@@ -235,7 +235,7 @@ export const verSaldosPendientes = async (config) => {
 */
 export const pagarActividadEvento = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/pay/activity-event/",
+    "https://django-eventos.azurewebsites.net/pay/activity-event/",
     config
   );
   return data.json();
@@ -254,7 +254,7 @@ export const pagarActividadEvento = async (config) => {
 */
 export const obtenerDatosDashboard = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/dashboard/data/",
+    "https://django-eventos.azurewebsites.net/dashboard/data/",
     config
   );
   return data.json();
@@ -273,7 +273,7 @@ export const obtenerDatosDashboard = async (config) => {
 */
 export const verEventosActividadesParticipante = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/view/events-activities-as-participant/",
+    "https://django-eventos.azurewebsites.net/view/events-activities-as-participant/",
     config
   );
   return data.json();
@@ -293,7 +293,7 @@ export const verEventosActividadesParticipante = async (config) => {
 */
 export const crearActividad = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/create/activity/",
+    "https://django-eventos.azurewebsites.net/create/activity/",
     config
   );
   return data.json()
@@ -313,7 +313,7 @@ export const crearActividad = async (config) => {
 */
 export const modificarActividad = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/modify/activity/",
+    "https://django-eventos.azurewebsites.net/modify/activity/",
     config
   );
   return data.json()
@@ -333,7 +333,7 @@ export const modificarActividad = async (config) => {
 */
 export const eliminarActividad = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/delete/activity/",
+    "https://django-eventos.azurewebsites.net/delete/activity/",
     config
   );
   return data.json()
@@ -353,7 +353,7 @@ export const eliminarActividad = async (config) => {
 */
 export const modificarEvento = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/update/event/",
+    "https://django-eventos.azurewebsites.net/update/event/",
     config
   );
   return data.json();
@@ -373,7 +373,7 @@ export const modificarEvento = async (config) => {
 */
 export const eliminarParticipante = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/remove/contact/activity/",
+    "https://django-eventos.azurewebsites.net/remove/contact/activity/",
     config
   );
   return data.json();
@@ -393,7 +393,7 @@ export const eliminarParticipante = async (config) => {
 */
 export const agregarParticipante = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/add/contact/activity/",
+    "https://django-eventos.azurewebsites.net/add/contact/activity/",
     config
   );
   return data.json();
@@ -412,7 +412,7 @@ export const agregarParticipante = async (config) => {
 */
 export const verTodasLasActividadesDeEventos = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/view/all-activities-event/",
+    "https://django-eventos.azurewebsites.net/view/all-activities-event/",
     config
   );
   return data.json();
@@ -431,7 +431,7 @@ export const verTodasLasActividadesDeEventos = async (config) => {
 */
 export const verTodasLosParticipantesDeEventos = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/view/all-participants-event/",
+    "https://django-eventos.azurewebsites.net/view/all-participants-event/",
     config
   );
   return data.json();
@@ -451,7 +451,7 @@ export const verTodasLosParticipantesDeEventos = async (config) => {
 */
 export const aceptarActividad = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/accept/activity/",
+    "https://django-eventos.azurewebsites.net/accept/activity/",
     config
   );
   return data.json();
@@ -471,7 +471,7 @@ export const aceptarActividad = async (config) => {
 */
 export const verTodasActividadesUnEvento = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/view/activities/event/",
+    "https://django-eventos.azurewebsites.net/view/activities/event/",
     config
   );
   return data.json();
@@ -490,7 +490,7 @@ export const verTodasActividadesUnEvento = async (config) => {
 */
 export const verSaldosPendientesContactos = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/list/pending-balance/contacts/",
+    "https://django-eventos.azurewebsites.net/list/pending-balance/contacts/",
     config
   );
   return data.json();
