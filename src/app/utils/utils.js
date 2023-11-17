@@ -279,6 +279,144 @@ export const verEventosActividadesParticipante = async (config) => {
   return data.json();
 };
 
+/**
+* Modifica un evento
+* @param {JSON} config JSON = {
+    method: "PUT",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const modificarEvento = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/update/event/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Elimina un participante de una actividad
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const eliminarParticipante = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/remove/contact/activity/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Agrega un participante a una actividad
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const agregarParticipante = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/add/contact/activity/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra todas las actividades de todos los eventos creados de un usuario
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verTodasLasActividadesDeEventos = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/all-activities-event/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra todas las actividades de todos los eventos creados de un usuario
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const aceptarActividad = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/accept/activity/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra todas las actividades de un evento en particular.
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const verTodasActividadesUnEvento = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/activities/event/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra todos los saldos pendientes de los contactos del usuario
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verSaldosPendientesContactos = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/list/pending-balance/contacts/",
+    config
+  );
+  return data.json();
+};
+
 //------------------------------------------------------------------------------
 // Funciones predefinidas en la plantilla, por si las quieren usar
 //------------------------------------------------------------------------------

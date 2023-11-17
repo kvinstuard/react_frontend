@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { Breadcrumb, SimpleCard } from "app/components";
-import CreateEventsForm from "./create_events_form";
-import CreateEventsTable from "./CreateEventsTable";
+import LinkContactsForm from "./link_contacts_form";
+import LinkContactsTable from "./LinkContactsTable";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
@@ -17,15 +17,15 @@ const AppForm = () => {
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Event", path: "/create/events" }, { name: "Create" }]} />
+        <Breadcrumb routeSegments={[{ name: "Event", path: "/link/contacts" }, { name: "add_remove_contacts" }]} />
       </Box>
 
       <Stack spacing={3}>
-        <SimpleCard title="Create Events Form">
-          <CreateEventsForm />
+        <SimpleCard title="Add or Remove Contacts Form">
+          <LinkContactsForm />
         </SimpleCard>
         <SimpleCard title="Created Events">
-          <CreateEventsTable />
+          <LinkContactsTable />
         </SimpleCard>
       </Stack>
     </Container>

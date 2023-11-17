@@ -47,8 +47,6 @@ import {
         console.log("context:",usuario)
         const body = {
           "descripcion": descripcion,
-          "email_contacto": null,
-          "valor_a_pagar": Number(valorAPagar),
         }
         console.log("body:",  body)
         console.log("state:", state)
@@ -62,7 +60,7 @@ import {
           body: JSON.stringify(body),
         };
         try {
-          let response = await utils.pagarActividadEvento(config)
+          let response = await utils.aceptarActividad(config)
           setLoading(false);
           if (response.error){
             setOpen(true)
@@ -72,7 +70,7 @@ import {
           }
           else {
             setOpen(true)
-            setErrMsg("Payment made successfully!")
+            setErrMsg("Activity accepted successfully!")
             setMsgType("success")
           }
           console.log("response:", response)
@@ -94,7 +92,6 @@ import {
   
     const {
       descripcion,
-      valorAPagar,
     } = state;
 
     return (
@@ -118,22 +115,12 @@ import {
                 errorMessages={["this field is required"]}
               />
 
-              <TextField
-                type="number"
-                name="valorAPagar"
-                label="Value to pay"
-                onChange={handleChange}
-                value={valorAPagar || ""}
-                validators={["required"]}
-                errorMessages={["this field is required"]}
-              />
-
             </Grid>
           </Grid>
   
           <LoadingButton color="primary" variant="contained" type="submit" loading={loading}>
             <Icon>send</Icon>
-            <Span sx={{ pl: 1, textTransform: "capitalize" }}>Pay</Span>
+            <Span sx={{ pl: 1, textTransform: "capitalize" }}>Accept Activity</Span>
           </LoadingButton>
         </ValidatorForm>
       </div>

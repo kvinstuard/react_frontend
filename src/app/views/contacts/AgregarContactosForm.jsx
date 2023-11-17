@@ -18,12 +18,16 @@ import {
   }));
   
   const AgregarContactosForm = () => {
-      const [state, setState] = useState();
+      const [state, setState] = useState({ email: '' });
       const context = useContext(userContext)
       const [open, setOpen] = React.useState(false);
       const [errMsg, setErrMsg] = useState("");
       const [msgType, setMsgType] = useState("error");
       const [loading, setLoading] = useState(false);
+
+      const { 
+        email 
+      } = state
 
       function handleClose(_, reason) {
         if (reason === "clickaway") {
@@ -47,7 +51,7 @@ import {
         console.log("context:",usuario)
         const body = {
           "correo_usuario": usuario.user.email,
-          "correo_contacto": state.email
+          "correo_contacto": email
         }
         console.log("body:",  body)
         console.log("state:", state)
@@ -89,7 +93,7 @@ import {
       event.persist();
       setState({ ...state, [event.target.name]: event.target.value });
     };
-  
+
     return (
       <div>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -97,15 +101,21 @@ import {
             {errMsg}
           </Alert>
         </Snackbar>
-        <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
+        <ValidatorForm 
+            onSubmit={handleSubmit} 
+            onError={() => null} 
+            >
           <Grid container spacing={6}>
             <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
   
               <TextField
-                type="email"
+                // type="text"
                 name="email"
                 label="Email"
+                value={email || ""}
                 onChange={handleChange}
+                validators={['required', 'isEmail']}
+                errorMessages={['this field is required', 'email is not valid']}
               />
             </Grid>
           </Grid>

@@ -46,7 +46,7 @@ const StatCards = () => {
     { name: 'Contacts', amount: `${dashboardData.cantidad_contactos}`, icon: 'group' },
     { name: "Pending Balance - Total", amount: `$${dashboardData.total_saldos_pendientes}`, icon: 'attach_money' },
     { name: 'Events created', amount: `${dashboardData.cantidad_eventos_creados}`, icon: 'store' },
-    { name: 'Total of events in which you participate', amount: `${dashboardData.cantidad_eventos_participante}`, icon: 'shopping_cart' },
+    { name: 'Activities in which you participate', amount: `${dashboardData.cantidad_actividades_participante}`, icon: 'shopping_cart' },
   ];
 
   useEffect(() => {
