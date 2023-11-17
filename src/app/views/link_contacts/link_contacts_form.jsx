@@ -37,53 +37,103 @@ const SimpleForm = () => {
   const handleSubmit = async (event) => {
     setLoading(true);
 
-    // Validemos si el usuario quiere asignarse a si mismo.
-    let email = ""
-    console.log("email_contact:",email_contact, "user_email:",context.user_data.user.email)
-    if (email_contact === context.user_data.user.email) email = null;
-    else email = email_contact;
+    let emails = email_contact.split(", ")
+    let participationValues = participation_value
+    let totalUsers = emails.length
+    let percentage = 1 / totalUsers
 
-    // se configura el cuerpo de la consulta para crear el evento en la BD.
-    const body = {
-      "descripcion": activityDescription,
-      "email_contacto": email,
-      "valor_participacion": Number(participation_value),
-    };
-    
-    console.log("context:", context)
-    const config = {
-      method: "POST",
-      headers: {
-        Authorization: `Token ${context.token}`,
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(body),
-    };
-    console.log("body:", body)
-    console.log("event:", event)
-    try {
-      let response = await utils.agregarParticipante(config)
+    // Validamos si el usuario no ingresó datos en el campo de valor de participación.
+    // Si no lo hace, el sistema calcula por defecto los porcentajes en partes iguales
+    console.log("participationValues:", participationValues)
+    if (participationValues == null) {
+      // iteramos para que formemos la cadena de valores de participación
+      participationValues = [ percentage ]
+      for(let i = 1; i < totalUsers; i++){ 
+        participationValues.push(percentage)
+      }
+    }
+    else if (totalUsers !== participationValues.split(", ").length) {
+      // Si ingresa valores, al menos validemos que ingreso la misma cantidad que usuarios
+      setOpen(true)
       setLoading(false);
-      if (response.error){
-        setOpen(true)
-        setErrMsg(`Error: ${JSON.stringify(response.error_cause)}`)
-        setMsgType("error")
-        return ;
+      setErrMsg(`Error: Invalid output, number of users = number of participation values.`)
+      setMsgType("error")
+      return ;
+    }
+    else{
+      participationValues = participation_value.split(", ")
+    }
+
+    // Validamos que todos los valores o sean porcentajes o sean montos (númericos)
+    let n_porcentajes = 0;
+    let n_montos = 0;
+    for(let i = 0; i < totalUsers; i++) {
+      if (participationValues[i] > 0 && participationValues[i] <= 1) {
+        n_porcentajes++;
       }
       else {
-        setOpen(true)
-        setErrMsg("Participant added successfully!")
-        setMsgType("success")
+        n_montos++;
       }
-      // navigate("/")
     }
-    catch (e) {
-      console.log("exception:", e)
-      setLoading(false);
+
+    console.log("n_montos:",n_montos,"n_porcentajes:",n_porcentajes, "totalUsers:",totalUsers)
+    if (n_montos !== totalUsers && n_porcentajes !== totalUsers ) {
       setOpen(true)
-      setErrMsg("Error:" + e)
+      setLoading(false);
+      setErrMsg(`Error: Invalid output, all participation values must be (%) or an amount (Number).`)
       setMsgType("error")
+      return ;
     }
+
+    console.log("participationValues2", participationValues)
+    console.log("emails:", emails)
+    
+    // Ahora iteramos sobre cada usuario y llamamos la vista sobre cada uno
+    for (let i = 0; i < totalUsers; i ++){
+      // Validemos si el usuario quiere asignarse a si mismo.
+      console.log("email_contact:",emails[i], "user_email:",context.user_data.user.email)
+      if (emails[i] === context.user_data.user.email) emails[i] = null;
+
+      // se configura el cuerpo de la consulta para crear el evento en la BD.
+      const body = {
+        "descripcion": activityDescription,
+        "email_contacto": emails[i],
+        "valor_participacion": Number(participationValues[i]),
+      };
+      
+      console.log("context:", context)
+      const config = {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${context.token}`,
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(body),
+      };
+      console.log("body:", body)
+      console.log("event:", event)
+      try {
+        let response = await utils.agregarParticipante(config)
+        setLoading(false);
+        if (response.error){
+          setOpen(true)
+          setErrMsg(`Error: ${JSON.stringify(response.error_cause)}`)
+          setMsgType("error")
+          return ;
+        }
+      }
+      catch (e) {
+        console.log("exception:", e)
+        setLoading(false);
+        setOpen(true)
+        setErrMsg("Error:" + e)
+        setMsgType("error")
+      }
+    }
+    // Si se completó todo, hubó éxito.
+    setOpen(true)
+    setErrMsg("Participant added successfully!")
+    setMsgType("success")
   };
 
 
@@ -126,18 +176,20 @@ const SimpleForm = () => {
               label="Contact's email"
               onChange={handleChange}
               value={email_contact || ""}
-              validators={['required', 'isEmail']}
-              errorMessages={['this field is required', 'email is not valid']}
+              validators={["required"]}
+              errorMessages={["this field is required"]}
+              // validators={['required', 'isEmail']}
+              // errorMessages={['this field is required', 'email is not valid']}
             />
 
             <TextField
-              type="number"
+              type="text"
               name="participation_value"
               label="Participation Value"
               onChange={handleChange}
               value={participation_value || ""}
-              validators={["required"]}
-              errorMessages={["this field is required"]}
+              // validators={["required"]}
+              // errorMessages={["this field is required"]}
             />
 
           </Grid>
