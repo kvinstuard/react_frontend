@@ -10,6 +10,10 @@ import contactsRoutes from './views/contacts/ContactsRoutes';
 import userRoutes from './views/users/UserRoutes';
 import EventRoutes from './views/events/EventsRoutes';
 import ActivitiesRoutes from './views/activities/ActivitiesRoutes';
+import ModifyEventsRoutes from './views/modify_events/ModifyEventsRoutes';
+import LinkContactsRoutes from './views/link_contacts/LinkContactsRoutes';
+import AcceptActivitiesRoutes from "./views/accept_activities/AcceptActivitiesRoutes";
+import ActivitiesAllEventsRoutes from "./views/activities_all_events/ActivitiesAllEventsRoutes"
 
 const routes = [
   {
@@ -19,7 +23,9 @@ const routes = [
       </AuthGuard>
     ),
     children: [...dashboardRoutes, ...chartsRoute, ...materialRoutes, 
-               ...contactsRoutes, ...userRoutes, ...EventRoutes, ...ActivitiesRoutes],
+               ...contactsRoutes, ...userRoutes, ...EventRoutes,
+               ...ModifyEventsRoutes, ...LinkContactsRoutes, ...AcceptActivitiesRoutes,
+               ...ActivitiesAllEventsRoutes, ...ActivitiesRoutes],
   },
   ...sessionRoutes,
   { path: '/', element: <Navigate to="session/signin" /> },

@@ -2,9 +2,7 @@ import { Box, styled, Stack } from "@mui/material";
 import { Breadcrumb, SimpleCard } from "app/components";
 import PendingBalanceTable from "./PendingBalanceTable";
 import PendingBalanceForm from "./PendingBalanceForm";
-import { useState, useEffect, useContext } from "react";
-import * as utils from 'app/utils/utils';
-import { userContext } from "../../contexts/user-context";
+
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
@@ -16,34 +14,6 @@ const Container = styled("div")(({ theme }) => ({
 }));
 
 const MyPendingBalance = () => {
-  const context = useContext(userContext);
-  const [pendingBalanceList, setPendingBalanceList] = useState([]);
-
-  useEffect(() => {
-    const configLista = async () => {
-      // Se obtienen los saldos pendientes del usuario
-      const usuario = context.user_data;
-      console.log("AuthContext:", usuario)
-
-      const config = {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${context.token}`,
-          "Content-type": "application/json",
-        },
-      };
-
-      try {
-        const response = await utils.verSaldosPendientes(config);
-        console.log("response:", response.eventos_actividades)
-        await setPendingBalanceList(response.eventos_actividades);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    configLista();
-  }, [context.user_data, context.token]);
   
   return (
     <Container>
@@ -56,7 +26,7 @@ const MyPendingBalance = () => {
       </SimpleCard>
 
       <SimpleCard title="Pending balance">
-        <PendingBalanceTable pendingBalanceList={pendingBalanceList} />
+        <PendingBalanceTable />
       </SimpleCard>
     </Stack>
     </Container>

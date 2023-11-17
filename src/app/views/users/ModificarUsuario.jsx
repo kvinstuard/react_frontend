@@ -54,7 +54,7 @@ const ModificarUsuario = () => {
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Form" }]} />
+        <Breadcrumb routeSegments={[{ name: "Modify", path: "/users/modify" }, { name: "User" }]} />
       </Box>
 
       <Stack spacing={3}>

@@ -1,7 +1,6 @@
 import { Box, styled, Stack } from "@mui/material";
 import { Breadcrumb, SimpleCard } from "app/components";
-import PaginationContactTable from "./PaginationContactTable";
-import AgregarContactosForm from "./AgregarContactosForm";
+import ActivitiesAllEventsTable from "./ActivitiesAllEventsTable";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
@@ -12,24 +11,20 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-const ListaContactos = () => {
+const MyPendingBalance = () => {
   
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Contacts", path: "/contacts/list" }, { name: "List" }]} />
+        <Breadcrumb routeSegments={[{ name: "Events", path: "/all/Activities" }, { name: "All Activities" }]} />
       </Box>
     <Stack spacing={3}>
-      <SimpleCard title="Contact's management">
-        <AgregarContactosForm />
-      </SimpleCard>
-
-      <SimpleCard title="Contact's list">
-        <PaginationContactTable />
+      <SimpleCard title="Pending balance">
+        <ActivitiesAllEventsTable />
       </SimpleCard>
     </Stack>
     </Container>
   );
 };
 
-export default ListaContactos;
+export default MyPendingBalance;

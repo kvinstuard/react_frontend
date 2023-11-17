@@ -27,14 +27,10 @@ const PendingBalanceTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const context = useContext(userContext);
-  const [pendingBalanceList, setPendingBalanceList] = useState([]);
+  const [allContactsPendings, setAllContactsPendings] = useState([]);
 
   useEffect(() => {
     const configLista = async () => {
-      // Se obtienen los saldos pendientes del usuario
-      const usuario = context.user_data;
-      console.log("AuthContext:", usuario)
-
       const config = {
         method: "GET",
         headers: {
@@ -44,16 +40,15 @@ const PendingBalanceTable = () => {
       };
 
       try {
-        const response = await utils.verSaldosPendientes(config);
-        console.log("response:", response.eventos_actividades)
-        await setPendingBalanceList(response.eventos_actividades);
+        const response = await utils.verSaldosPendientesContactos(config);
+        await setAllContactsPendings(response.eventos_actividades);
       } catch (error) {
         console.error("Error:", error);
       }
     };
 
     configLista();
-  }, [context.user_data, context.token, pendingBalanceList]);
+  }, [context.user_data, context.token, allContactsPendings]);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -64,10 +59,10 @@ const PendingBalanceTable = () => {
     setPage(0);
   };
 
-  if (pendingBalanceList == null){
+  if (allContactsPendings == null){
     return <p>No data found!.</p>;
   }
-  else if (pendingBalanceList.length === 0) {
+  else if (allContactsPendings.length === 0) {
     return <p>No data found!.</p>;
   }
   return (
@@ -75,23 +70,21 @@ const PendingBalanceTable = () => {
       <StyledTable>
         <TableHead>
           <TableRow>
+            <TableCell align="center">Contact</TableCell>
+            <TableCell align="center">Pending Balance</TableCell>
             <TableCell align="center">Activity</TableCell>
             <TableCell align="center">Event</TableCell>
-            <TableCell align="center">Pending balance</TableCell>
-            <TableCell align="center">Total balance</TableCell>
-            <TableCell align="center">Accepted</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {pendingBalanceList
+          {allContactsPendings
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((balance, index) => (
+            .map((evento, index) => (
               <TableRow key={index}>
-                <TableCell align="center">{balance.actividad}</TableCell>
-                <TableCell align="center">{balance.evento}</TableCell>
-                <TableCell align="center">${balance.saldo_pendiente}</TableCell>
-                <TableCell align="center">${balance.saldo_total}</TableCell>
-                <TableCell align="center">{balance.aceptado}</TableCell>
+                <TableCell align="center">{evento.contacto}</TableCell>
+                <TableCell align="center">{evento.saldo_pendiente}</TableCell>
+                <TableCell align="center">{evento.actividad_usuario_propietario}</TableCell>
+                <TableCell align="center">{evento.evento}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -102,7 +95,7 @@ const PendingBalanceTable = () => {
         page={page}
         component="div"
         rowsPerPage={rowsPerPage}
-        count={pendingBalanceList.length}
+        count={allContactsPendings.length}
         onPageChange={handleChangePage}
         rowsPerPageOptions={[5, 10, 25]}
         onRowsPerPageChange={handleChangeRowsPerPage}
