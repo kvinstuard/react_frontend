@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Card, Checkbox, Grid, TextField } from '@mui/material';
+import { Card, Grid, TextField } from '@mui/material';
 import { Alert, Snackbar } from "@mui/material";
 import { Box, styled, useTheme } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
@@ -40,8 +40,8 @@ const JWTRoot = styled(JustifyBox)(() => ({
 const initialValues = {
   // email: 'jason@ui-lib.com',
   // password: 'dummyPass',
-  email: 'b3@a.com',
-  password: 'ctzFXgSu',
+  email: '',
+  password: '',
   remember: true,
 };
 
@@ -184,7 +184,7 @@ const JwtLogin = () => {
                       sx={{ mb: 1.5 }}
                     />
 
-                    <FlexBox justifyContent="space-between">
+                    {/* <FlexBox justifyContent="space-between">
                       <FlexBox gap={1}>
                         <Checkbox
                           size="small"
@@ -203,7 +203,7 @@ const JwtLogin = () => {
                       >
                         Forgot password?
                       </NavLink>
-                    </FlexBox>
+                    </FlexBox> */}
 
                     <LoadingButton
                       type="submit"

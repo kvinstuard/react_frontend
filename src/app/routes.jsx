@@ -8,6 +8,11 @@ import { Navigate } from 'react-router-dom';
 import MatxLayout from './components/MatxLayout/MatxLayout';
 import contactsRoutes from './views/contacts/ContactsRoutes';
 import userRoutes from './views/users/UserRoutes';
+import EventRoutes from './views/events/EventsRoutes';
+import ModifyEventsRoutes from './views/modify_events/ModifyEventsRoutes';
+import LinkContactsRoutes from './views/link_contacts/LinkContactsRoutes';
+import AcceptActivitiesRoutes from "./views/accept_activities/AcceptActivitiesRoutes";
+import ActivitiesAllEventsRoutes from "./views/activities_all_events/ActivitiesAllEventsRoutes"
 
 const routes = [
   {
@@ -17,7 +22,9 @@ const routes = [
       </AuthGuard>
     ),
     children: [...dashboardRoutes, ...chartsRoute, ...materialRoutes, 
-               ...contactsRoutes, ...userRoutes],
+               ...contactsRoutes, ...userRoutes, ...EventRoutes,
+               ...ModifyEventsRoutes, ...LinkContactsRoutes, ...AcceptActivitiesRoutes,
+               ...ActivitiesAllEventsRoutes ],
   },
   ...sessionRoutes,
   { path: '/', element: <Navigate to="session/signin" /> },
