@@ -47,7 +47,7 @@ import {
         console.log("context:",usuario)
         const body = {
           "descripcion": descripcion,
-          "email_contacto": null,
+          "email_contacto": contactEmail,
           "valor_a_pagar": Number(valorAPagar),
         }
         console.log("body:",  body)
@@ -94,6 +94,7 @@ import {
   
     const {
       descripcion,
+      contactEmail,
       valorAPagar,
     } = state;
 
@@ -108,6 +109,16 @@ import {
           <Grid container spacing={6}>
             <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
   
+              <TextField
+                type="text"
+                name="contactEmail"
+                label="Participant's Email"
+                onChange={handleChange}
+                value={contactEmail || ""}
+                validators={['required', 'isEmail']}
+                errorMessages={['this field is required', 'email is not valid']}
+              />
+
               <TextField
                 type="text"
                 name="descripcion"

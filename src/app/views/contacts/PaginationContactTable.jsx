@@ -12,10 +12,10 @@ import {
     Avatar,
   } from "@mui/material";
   import { Alert, Snackbar } from "@mui/material";
-  import { useState, useContext } from "react";
+  import { useState, useEffect, useContext } from "react";
   import * as utils from 'app/utils/utils';
+  import { userContext } from "../../contexts/user-context";
   import React from "react";
-  import { userContext } from "../../contexts/user-context"
   
   const StyledTable = styled(Table)(() => ({
 
@@ -37,7 +37,7 @@ import {
   //   },
   // ];
   
-  const PaginationContactTable = ({ contactList }) => {
+  const PaginationContactTable = () => {
     const context = useContext(userContext);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -45,6 +45,39 @@ import {
     const [open, setOpen] = React.useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [msgType, setMsgType] = useState("error");
+
+    const [contactList, setContactList] = useState([]); // Estado para almacenar los datos de contacto
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Se obtienen los datos de los contactos
+      const usuario = context.user_data;
+      console.log("AuthContext:", usuario)
+      const body = {
+        // "email": usuario.user_details.user.email,
+        "email": usuario.user.email,
+      };
+
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(body),
+      };
+
+      try {
+        const response = await utils.listContacts(config);
+        console.log("response:", response.contactos)
+        // Actualiza el estado con los datos de contacto recibidos
+        setContactList(response.contactos);
+      } catch (error) {
+        console.error("Error al obtener los contactos:", error);
+      }
+    };
+
+    fetchData();
+  }, [context.user_data, contactList]);
 
     function handleClose(_, reason) {
       if (reason === "clickaway") {
@@ -64,7 +97,7 @@ import {
 
     const handleDeleteContact = async (contact) => {
       console.log("Datos del contacto a eliminar:", contact);
-      // Se elimina al contacto
+      // Se elimina al participante de la activida
       let usuario = context.user_data
       console.log("context:",usuario)
       const body = {

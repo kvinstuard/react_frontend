@@ -69,17 +69,36 @@ const DoughnutChart = ({ height, color = [] }) => {
                 let count_pareja = 0;
                 let count_comida = 0;
                 let count_otro = 0;
+
+                // Utilizamos un conjunto para realizar un seguimiento de los nombres únicos
+                const actividades_participa = new Set();
+
                 for(let i=0; i < response.actividades_en_que_participa.length; i++) {
                     // eventos tipo: 'VIAJE'
-                    if (response.actividades_en_que_participa[i].evento_tipo === "VIAJE") count_viaje++;
+                    if (response.actividades_en_que_participa[i].evento_tipo === "VIAJE" && !actividades_participa.has(response.actividades_en_que_participa[i].evento)) { 
+                        count_viaje++; 
+                        actividades_participa.add(response.actividades_en_que_participa[i].evento)
+                    }
                     // eventos tipo: 'HOGAR'
-                    if (response.actividades_en_que_participa[i].evento_tipo === "HOGAR") count_hogar++;
+                    else if (response.actividades_en_que_participa[i].evento_tipo === "HOGAR" && !actividades_participa.has(response.actividades_en_que_participa[i].evento)) {
+                        count_hogar++;
+                        actividades_participa.add(response.actividades_en_que_participa[i].evento)
+                    }
                     // eventos tipo: 'PAREJA'
-                    if (response.actividades_en_que_participa[i].evento_tipo === "PAREJA") count_pareja++;
+                    else if (response.actividades_en_que_participa[i].evento_tipo === "PAREJA" && !actividades_participa.has(response.actividades_en_que_participa[i].evento)) {
+                        count_pareja++;
+                        actividades_participa.add(response.actividades_en_que_participa[i].evento)
+                    }
                     // eventos tipo: 'COMIDA'
-                    if (response.actividades_en_que_participa[i].evento_tipo === "COMIDA") count_comida++;
+                    else if (response.actividades_en_que_participa[i].evento_tipo === "COMIDA" && !actividades_participa.has(response.actividades_en_que_participa[i].evento)) {
+                        count_comida++;
+                        actividades_participa.add(response.actividades_en_que_participa[i].evento)
+                    }
                     // eventos tipo: 'OTRO'
-                    if (response.actividades_en_que_participa[i].evento_tipo === "OTRO") count_otro++;
+                    else if (response.actividades_en_que_participa[i].evento_tipo === "OTRO" && !actividades_participa.has(response.actividades_en_que_participa[i].evento)) {
+                        count_otro++;
+                        actividades_participa.add(response.actividades_en_que_participa[i].evento)
+                    }
                 }
                 let final_data = [
                     {

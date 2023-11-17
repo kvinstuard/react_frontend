@@ -16,6 +16,7 @@ export const navigations = [
     children: [
         {name: 'Contact list', iconText: 'SI', path:'/contacts/list'},
         {name: "Contact balance", iconText: 'SI', path: '/contacts/balance'},
+        {name: "All Contacts pending$", iconText: 'SI', path: '/contacts/all/pending/balance'},
     ],
   },
   {
@@ -23,7 +24,17 @@ export const navigations = [
     icon: 'store',
     children: [
         {name: 'Create event', iconText: 'SI', path:'/create/events'},
+        {name: 'Modify event', iconText: 'SI', path:'/modify/events'},
         {name: 'My pending balance', iconText: 'SI', path:'/my-pending/balance'},
+        {name: 'Add/Remove contacts', iconText: 'SI', path:'/link/contacts'},
+        {name: 'All Activities', iconText: 'SI', path:'/all/Activities'},
+    ],
+  },
+  {
+    name: 'Activities',
+    icon: 'local_activity',
+    children: [
+        {name: 'Accept activities', iconText: 'SI', path:'/accept/activities'},
     ],
   },
   // { label: 'Components', type: 'label' },

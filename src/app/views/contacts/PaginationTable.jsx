@@ -8,7 +8,9 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import * as utils from 'app/utils/utils';
+import { userContext } from "../../contexts/user-context";
 
 const StyledTable = styled(Table)(({ theme }) => ({
   whiteSpace: "pre",
@@ -20,10 +22,44 @@ const StyledTable = styled(Table)(({ theme }) => ({
   },
 }));
 
-const PaginationTable = ({ contactList }) => {
+const PaginationTable = () => {
   
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const context = useContext(userContext);
+
+  const [contactList, setContactList] = useState([]); // Estado para almacenar los datos de contacto
+
+  useEffect(() => {
+    const configLista = async () => {
+      // Se obtienen los datos de los contactos
+      const usuario = context.user_data;
+      console.log("AuthContext:", usuario)
+      const body = {
+        // "email": usuario.user_details.user.email,
+        "email": usuario.user.email,
+      };
+
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(body),
+      };
+
+      try {
+        const response = await utils.listContactsEvent(config);
+        console.log("response:", response.contactos)
+        // Actualiza el estado con los datos de contacto recibidos
+        setContactList(response.contactos);
+      } catch (error) {
+        console.error("Error al obtener los contactos:", error);
+      }
+    };
+
+    configLista();
+  }, [context.user_data, contactList]);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -46,9 +82,10 @@ const PaginationTable = ({ contactList }) => {
         <TableHead>
           <TableRow>
             <TableCell align="left">Pending Balance</TableCell>
-            <TableCell align="center">Contact's Name</TableCell>
-            <TableCell align="center">Contact's Email</TableCell>
+            <TableCell align="center">Participant's username</TableCell>
+            <TableCell align="center">Participant's Email</TableCell>
             <TableCell align="center">Activity</TableCell>
+            <TableCell align="center">Activity's Owner</TableCell>
             <TableCell align="center">Event</TableCell>
             <TableCell align="center">Accepted</TableCell>
           </TableRow>
@@ -59,9 +96,10 @@ const PaginationTable = ({ contactList }) => {
             .map((contact, index) => (
               <TableRow key={index}>
                 <TableCell align="left">${contact.saldo_pendiente}</TableCell>
-                <TableCell align="center">{contact.nombre}</TableCell>
+                <TableCell align="center">{contact.nombre_usuario}</TableCell>
                 <TableCell align="center">{contact.email}</TableCell>
                 <TableCell align="center">{contact.actividad}</TableCell>
+                <TableCell align="center">{contact.actividad_usuario_propietario}</TableCell>
                 <TableCell align="center">{contact.evento}</TableCell>
                 <TableCell align="center">{contact.aceptado}</TableCell>
               </TableRow>
