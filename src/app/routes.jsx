@@ -9,6 +9,7 @@ import MatxLayout from './components/MatxLayout/MatxLayout';
 import contactsRoutes from './views/contacts/ContactsRoutes';
 import userRoutes from './views/users/UserRoutes';
 import EventRoutes from './views/events/EventsRoutes';
+import ActivitiesRoutes from './views/activities/ActivitiesRoutes';
 
 const routes = [
   {
@@ -18,7 +19,7 @@ const routes = [
       </AuthGuard>
     ),
     children: [...dashboardRoutes, ...chartsRoute, ...materialRoutes, 
-               ...contactsRoutes, ...userRoutes, ...EventRoutes],
+               ...contactsRoutes, ...userRoutes, ...EventRoutes, ...ActivitiesRoutes],
   },
   ...sessionRoutes,
   { path: '/', element: <Navigate to="session/signin" /> },

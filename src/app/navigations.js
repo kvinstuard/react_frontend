@@ -26,6 +26,13 @@ export const navigations = [
         {name: 'My pending balance', iconText: 'SI', path:'/my-pending/balance'},
     ],
   },
+  {
+    name: 'Activities',
+    icon: 'camera',
+    children: [
+        {name: 'Create activity', iconText: 'SI', path:'/create/activities'},
+    ],
+  },
   // { label: 'Components', type: 'label' },
   // {
   //   name: 'Components',
