@@ -17,17 +17,13 @@ import {
     marginBottom: "16px",
   }));
   
-  const AgregarContactosForm = () => {
-      const [state, setState] = useState({ email: '' });
+  const PendingBalanceForm = () => {
+      const [state, setState] = useState({});
       const context = useContext(userContext)
       const [open, setOpen] = React.useState(false);
       const [errMsg, setErrMsg] = useState("");
       const [msgType, setMsgType] = useState("error");
       const [loading, setLoading] = useState(false);
-
-      const { 
-        email 
-      } = state
 
       function handleClose(_, reason) {
         if (reason === "clickaway") {
@@ -50,8 +46,9 @@ import {
         let usuario = context.user_data
         console.log("context:",usuario)
         const body = {
-          "correo_usuario": usuario.user.email,
-          "correo_contacto": email
+          "descripcion": descripcion,
+          "email_contacto": contactEmail,
+          "valor_a_pagar": Number(valorAPagar),
         }
         console.log("body:",  body)
         console.log("state:", state)
@@ -59,12 +56,13 @@ import {
         const config = {
           method: "POST",
           headers: {
+            Authorization: `Token ${context.token}`,
             "Content-type": "application/json",
           },
           body: JSON.stringify(body),
         };
         try {
-          let response = await utils.agregarContacto(config)
+          let response = await utils.pagarActividadEvento(config)
           setLoading(false);
           if (response.error){
             setOpen(true)
@@ -74,7 +72,7 @@ import {
           }
           else {
             setOpen(true)
-            setErrMsg("Contact added successfully!")
+            setErrMsg("Payment made successfully!")
             setMsgType("success")
           }
           console.log("response:", response)
@@ -93,6 +91,12 @@ import {
       event.persist();
       setState({ ...state, [event.target.name]: event.target.value });
     };
+  
+    const {
+      descripcion,
+      contactEmail,
+      valorAPagar,
+    } = state;
 
     return (
       <div>
@@ -101,32 +105,50 @@ import {
             {errMsg}
           </Alert>
         </Snackbar>
-        <ValidatorForm 
-            onSubmit={handleSubmit} 
-            onError={() => null} 
-            >
+        <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
           <Grid container spacing={6}>
             <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
   
               <TextField
-                // type="text"
-                name="email"
-                label="Email"
-                value={email || ""}
+                type="text"
+                name="contactEmail"
+                label="Participant's Email"
                 onChange={handleChange}
+                value={contactEmail || ""}
                 validators={['required', 'isEmail']}
                 errorMessages={['this field is required', 'email is not valid']}
               />
+
+              <TextField
+                type="text"
+                name="descripcion"
+                label="Activity's description"
+                onChange={handleChange}
+                value={descripcion || ""}
+                validators={["required"]}
+                errorMessages={["this field is required"]}
+              />
+
+              <TextField
+                type="number"
+                name="valorAPagar"
+                label="Value to pay"
+                onChange={handleChange}
+                value={valorAPagar || ""}
+                validators={["required"]}
+                errorMessages={["this field is required"]}
+              />
+
             </Grid>
           </Grid>
   
           <LoadingButton color="primary" variant="contained" type="submit" loading={loading}>
             <Icon>send</Icon>
-            <Span sx={{ pl: 1, textTransform: "capitalize" }}>Add contact</Span>
+            <Span sx={{ pl: 1, textTransform: "capitalize" }}>Pay</Span>
           </LoadingButton>
         </ValidatorForm>
       </div>
     );
   };
   
-  export default AgregarContactosForm;
+  export default PendingBalanceForm;

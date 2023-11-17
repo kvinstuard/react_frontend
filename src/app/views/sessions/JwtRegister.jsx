@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import { LoadingButton } from '@mui/lab';
-import { Card, Checkbox, Grid, TextField } from '@mui/material';
+import { Card, Grid, TextField } from '@mui/material';
 import { Alert, Snackbar } from "@mui/material";
 import { Box, styled } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
@@ -37,13 +37,13 @@ const JWTRegister = styled(JustifyBox)(() => ({
 
 // inital login credentials
 const initialValues = {
-  email: 'b13@a.com',
-  nombres: 'Mario bros',
-  apellidos: 'unknown',
-  password: '123321123',
-  username: 'super mario',
-  foto: 'no tiene',
-  remember: true,
+  email: '',
+  nombres: '',
+  apellidos: '',
+  password: '',
+  username: '',
+  foto: '',
+  // remember: true,
 };
 
 // form field validation schema
@@ -236,7 +236,7 @@ const JwtRegister = () => {
                       sx={{ mb: 3 }}
                     />
 
-                    <FlexBox gap={1} alignItems="center">
+                    {/* <FlexBox gap={1} alignItems="center">
                       <Checkbox
                         size="small"
                         name="remember"
@@ -248,7 +248,7 @@ const JwtRegister = () => {
                       <Paragraph fontSize={13}>
                         I have read and agree to the terms of service.
                       </Paragraph>
-                    </FlexBox>
+                    </FlexBox> */}
 
                     <LoadingButton
                       type="submit"
