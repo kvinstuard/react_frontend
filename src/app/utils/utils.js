@@ -62,7 +62,7 @@ export function enviarMensaje(title, content, type, id, width) {
 */
 export const loginUser = async (config) => {
   const data = await fetch(
-    "https://django-eventos.azurewebsites.net/login/user/",
+    "http://django-eventos.azurewebsites.net/login/user/",
     config
   );
   return data.json();
@@ -81,7 +81,7 @@ export const loginUser = async (config) => {
 */
 export const listContacts = async (config) => {
   const data = await fetch(
-    "https://django-eventos.azurewebsites.net/listar/contactos/",
+    "http://django-eventos.azurewebsites.net/listar/contactos/",
     config
   );
   return data.json();
@@ -100,7 +100,7 @@ export const listContacts = async (config) => {
 */
 export const listContactsEvent = async (config) => {
   const data = await fetch(
-    "https://django-eventos.azurewebsites.net/listar/contactos/evento/",
+    "http://django-eventos.azurewebsites.net/listar/contactos/evento/",
     config
   );
   return data.json();
@@ -119,7 +119,7 @@ export const listContactsEvent = async (config) => {
 */
 export const createUser = async (config) => {
   const data = await fetch(
-    "https://django-eventos.azurewebsites.net/crear/usuario/",
+    "http://django-eventos.azurewebsites.net/crear/usuario/",
     config
   );
   return data.json();
@@ -138,7 +138,7 @@ export const createUser = async (config) => {
 */
 export const updateUser = async (config) => {
   const data = await fetch(
-    "https://django-eventos.azurewebsites.net/modificar/usuario/",
+    "http://django-eventos.azurewebsites.net/modificar/usuario/",
     config
   );
   return data.json();
@@ -157,7 +157,7 @@ export const updateUser = async (config) => {
 */
 export const agregarContacto = async (config) => {
   const data = await fetch(
-    "https://django-eventos.azurewebsites.net/agregar/contacto/",
+    "http://django-eventos.azurewebsites.net/agregar/contacto/",
     config
   );
   return data.json();
@@ -176,7 +176,266 @@ export const agregarContacto = async (config) => {
 */
 export const eliminarContacto = async (config) => {
   const data = await fetch(
-    "https://django-eventos.azurewebsites.net/eliminar/contacto/",
+    "http://django-eventos.azurewebsites.net/eliminar/contacto/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Crea un evento
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const crearEvento = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/crear/evento/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Obtiene los saldos pendientes de un usuario.
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verSaldosPendientes = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/view/pending-balance/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Paga un saldo pendiente parcial o totalmente de una actividad.
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const pagarActividadEvento = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/pay/activity-event/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Obtiene datos básicos, necesarios para el dashboard
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const obtenerDatosDashboard = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/dashboard/data/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Esta vista muestra en cuales actividades y eventos el usuario participa.
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verEventosActividadesParticipante = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/view/events-activities-as-participant/",
+    config
+  );
+  return data.json();
+};
+
+export const crearActividad = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/view/create/activity/",
+    config
+  );
+  return data.json()
+};
+
+export const eliminarActividad = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/view/delete/activity/",
+    config
+  );
+  return data.json()
+};
+
+export const verActividadesEventos = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/view/activities/event/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Modifica un evento
+* @param {JSON} config JSON = {
+    method: "PUT",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const modificarEvento = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/update/event/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Elimina un participante de una actividad
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const eliminarParticipante = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/remove/contact/activity/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Agrega un participante a una actividad
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const agregarParticipante = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/add/contact/activity/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra todas las actividades de todos los eventos creados de un usuario
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verTodasLasActividadesDeEventos = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/view/all-activities-event/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra todas las actividades de todos los eventos creados de un usuario
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const aceptarActividad = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/accept/activity/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra todas las actividades de un evento en particular.
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const verTodasActividadesUnEvento = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/view/activities/event/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Muestra todos los saldos pendientes de los contactos del usuario
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verSaldosPendientesContactos = async (config) => {
+  const data = await fetch(
+    "http://django-eventos.azurewebsites.net/list/pending-balance/contacts/",
     config
   );
   return data.json();

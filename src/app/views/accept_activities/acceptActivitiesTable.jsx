@@ -18,48 +18,42 @@ const StyledTable = styled(Table)(({ theme }) => ({
     "& tr": { "& th": { paddingLeft: 0, paddingRight: 0 } },
   },
   "& tbody": {
-    "& tr": { "& td": { paddingLeft: 0, textTransform: "capitalize" } },
+    "& tr": { "& td": { paddingLeft: 0 } },
   },
 }));
 
-const PaginationTable = () => {
+const PendingBalanceTable = () => {
   
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const context = useContext(userContext);
-
-  const [contactList, setContactList] = useState([]); // Estado para almacenar los datos de contacto
+  const [pendingBalanceList, setPendingBalanceList] = useState([]);
 
   useEffect(() => {
     const configLista = async () => {
-      // Se obtienen los datos de los contactos
+      // Se obtienen los saldos pendientes del usuario
       const usuario = context.user_data;
       console.log("AuthContext:", usuario)
-      const body = {
-        // "email": usuario.user_details.user.email,
-        "email": usuario.user.email,
-      };
 
       const config = {
-        method: "POST",
+        method: "GET",
         headers: {
+          Authorization: `Token ${context.token}`,
           "Content-type": "application/json",
         },
-        body: JSON.stringify(body),
       };
 
       try {
-        const response = await utils.listContactsEvent(config);
-        console.log("response:", response.contactos)
-        // Actualiza el estado con los datos de contacto recibidos
-        setContactList(response.contactos);
+        const response = await utils.verSaldosPendientes(config);
+        console.log("response:", response.eventos_actividades)
+        await setPendingBalanceList(response.eventos_actividades);
       } catch (error) {
-        console.error("Error al obtener los contactos:", error);
+        console.error("Error:", error);
       }
     };
 
     configLista();
-  }, [context.user_data, contactList]);
+  }, [context.user_data, context.token, pendingBalanceList]);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -70,38 +64,34 @@ const PaginationTable = () => {
     setPage(0);
   };
 
-  if (contactList == null){
-    return <p>No data found in contact's list!.</p>;
+  if (pendingBalanceList == null){
+    return <p>No data found!.</p>;
   }
-  else if (contactList.length === 0) {
-    return <p>No data found in contact's list!.</p>;
+  else if (pendingBalanceList.length === 0) {
+    return <p>No data found!.</p>;
   }
   return (
     <Box width="100%" overflow="auto">
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Pending Balance</TableCell>
-            <TableCell align="center">Participant's username</TableCell>
-            <TableCell align="center">Participant's Email</TableCell>
             <TableCell align="center">Activity</TableCell>
-            <TableCell align="center">Activity's Owner</TableCell>
             <TableCell align="center">Event</TableCell>
+            <TableCell align="center">Pending balance</TableCell>
+            <TableCell align="center">Total balance</TableCell>
             <TableCell align="center">Accepted</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {contactList
+          {pendingBalanceList
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((contact, index) => (
+            .map((balance, index) => (
               <TableRow key={index}>
-                <TableCell align="left">${contact.saldo_pendiente}</TableCell>
-                <TableCell align="center">{contact.nombre_usuario}</TableCell>
-                <TableCell align="center">{contact.email}</TableCell>
-                <TableCell align="center">{contact.actividad}</TableCell>
-                <TableCell align="center">{contact.actividad_usuario_propietario}</TableCell>
-                <TableCell align="center">{contact.evento}</TableCell>
-                <TableCell align="center">{contact.aceptado}</TableCell>
+                <TableCell align="center">{balance.actividad}</TableCell>
+                <TableCell align="center">{balance.evento}</TableCell>
+                <TableCell align="center">${balance.saldo_pendiente}</TableCell>
+                <TableCell align="center">${balance.saldo_total}</TableCell>
+                <TableCell align="center">{balance.aceptado}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -112,7 +102,7 @@ const PaginationTable = () => {
         page={page}
         component="div"
         rowsPerPage={rowsPerPage}
-        count={contactList.length}
+        count={pendingBalanceList.length}
         onPageChange={handleChangePage}
         rowsPerPageOptions={[5, 10, 25]}
         onRowsPerPageChange={handleChangeRowsPerPage}
@@ -123,4 +113,4 @@ const PaginationTable = () => {
   );
 };
 
-export default PaginationTable;
+export default PendingBalanceTable;
