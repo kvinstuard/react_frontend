@@ -113,14 +113,9 @@ const JwtLogin = () => {
       console.log("contexto antes:",context)
       console.log("valores: 1.",response.description.token,
       "2." ,response.description.user_details)
-<<<<<<< HEAD
-      await context.setToken(response.description.token);
-      await context.setUserDetails(response.description.user_details)
-=======
       await context.setUserToken(response.description.token);
       await context.setUserData(response.description.user_details)
-
->>>>>>> aa17748bb02deabed4f00062118ef8f5db4b3df6
+      
       console.log("contexto despues:",context)
 
       // se redirige al dashboard
