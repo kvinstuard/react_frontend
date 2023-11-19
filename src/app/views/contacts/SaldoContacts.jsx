@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { Breadcrumb, SimpleCard } from "app/components";
 import PaginationTable from "./PaginationTable";
 import SaldoContactsForm from "./SaldoContactsForm";
@@ -24,6 +24,9 @@ const SaldoContacts = () => {
         <SaldoContactsForm />
       </SimpleCard>
       <SimpleCard title="Contact's balance">
+        <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'left'}}>
+          How much your contacts owe you?
+        </Typography>
         <PaginationTable />
       </SimpleCard>
     </Container>

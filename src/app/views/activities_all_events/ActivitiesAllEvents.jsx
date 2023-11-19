@@ -1,4 +1,4 @@
-import { Box, styled, Stack } from "@mui/material";
+import { Box, styled, Stack, Typography } from "@mui/material";
 import { Breadcrumb, SimpleCard } from "app/components";
 import ActivitiesAllEventsTable from "./ActivitiesAllEventsTable";
 
@@ -20,6 +20,9 @@ const MyPendingBalance = () => {
       </Box>
     <Stack spacing={3}>
       <SimpleCard title="Pending balance">
+        <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'left'}}>
+          Here you can see all the activities available in each event you participate.
+        </Typography>
         <ActivitiesAllEventsTable />
       </SimpleCard>
     </Stack>

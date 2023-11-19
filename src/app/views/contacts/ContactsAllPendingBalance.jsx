@@ -1,4 +1,4 @@
-import { Box, styled, Stack } from "@mui/material";
+import { Box, styled, Stack, Typography } from "@mui/material";
 import { Breadcrumb, SimpleCard } from "app/components";
 import ContactsAllPendingBalanceTable from "./ContactsAllPendingBalanceTable";
 
@@ -19,7 +19,10 @@ const MyPendingBalance = () => {
         <Breadcrumb routeSegments={[{ name: "Contacts", path: "/contacts/all/pending/balance" }, { name: "Pending Balance" }]} />
       </Box>
     <Stack spacing={3}>
-      <SimpleCard title="Pending Contacts balance">
+      <SimpleCard title="Contacts - Pending Balance">
+      <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'left'}}>
+        Here you can see what's the detailed pending balance of each of your contacts per event and activity.
+      </Typography>
         <ContactsAllPendingBalanceTable />
       </SimpleCard>
     </Stack>
