@@ -30,7 +30,7 @@ const CrearActividad = () => {
           <ModifyActivitiesForm />
         </SimpleCard>
 
-        <SimpleCard title="All activities of all user events">
+        <SimpleCard title="My created activities">
           <ModifyActivitiesTable/>
         </SimpleCard>
       </Stack>
