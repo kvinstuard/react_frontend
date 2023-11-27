@@ -83,7 +83,7 @@ const PendingBalanceTable = () => {
               <TableRow key={index}>
                 <TableCell align="center">{evento.contacto}</TableCell>
                 <TableCell align="center">{evento.saldo_pendiente}</TableCell>
-                <TableCell align="center">{evento.actividad_usuario_propietario}</TableCell>
+                <TableCell align="center">{evento.actividad}</TableCell>
                 <TableCell align="center">{evento.evento}</TableCell>
               </TableRow>
             ))}

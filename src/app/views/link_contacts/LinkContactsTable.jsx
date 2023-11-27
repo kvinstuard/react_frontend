@@ -139,7 +139,7 @@ const PendingBalanceTable = () => {
           <TableRow>
             <TableCell align="center">Activity</TableCell>
             <TableCell align="center">Event</TableCell>
-            <TableCell align="center">Participant's Email</TableCell>
+            <TableCell align="center">Participantion value</TableCell>
             <TableCell align="center">Participant's Username</TableCell>
             <TableCell align="center">Event's Creator</TableCell>
             <TableCell align="center">Accepted</TableCell>
@@ -153,7 +153,7 @@ const PendingBalanceTable = () => {
               <TableRow key={index}>
                 <TableCell align="center">{events.actividad}</TableCell>
                 <TableCell align="center">{events.evento}</TableCell>
-                <TableCell align="center">{events.email_participante}</TableCell>
+                <TableCell align="center">{events.valor_participacion}</TableCell>
                 <TableCell align="center">{events.usuario_participante}</TableCell>
                 <TableCell align="center">{events.evento_creador}</TableCell>
                 <TableCell align="center">{events.aceptado}</TableCell>
