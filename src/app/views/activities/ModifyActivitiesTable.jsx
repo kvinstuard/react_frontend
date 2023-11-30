@@ -17,24 +17,15 @@ import {
   import { userContext } from "../../contexts/user-context"
   
   const StyledTable = styled(Table)(() => ({
-
     whiteSpace: "pre",
     "& thead": {
       "& tr": { "& th": { paddingLeft: 0, paddingRight: 0 } },
     },
     "& tbody": {
-      "& tr": { "& td": { paddingLeft: 0, textTransform: "normal" } },
+      "& tr": { "& td": { paddingLeft: 0, textTransform: "normal"}},
     },
   }));
-  
-  // const contactList = [
-  //   {
-  //     nombre: "Pepito Perez",
-  //     email: "pepitoperez@gmail.com",
-  //     apodo: "Pepito400",
-  //     avatar: "cat.png",
-  //   },
-  // ];
+
   
   const PaginationActivitiesTable = () => {
     const context = useContext(userContext);
@@ -132,20 +123,20 @@ import {
     };
   
     return (
-      <Box width="100%" overflow="auto">
+      <Box width="100%" overflow-x="auto">
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity={msgType} sx={{ width: "100%" }} variant="filled">
             {errMsg}
           </Alert>
         </Snackbar>
-        <StyledTable>
+        <StyledTable responsive>
           <TableHead>
             <TableRow>
-              <TableCell align="left">Description</TableCell>
+              <TableCell align="center">Description</TableCell>
               <TableCell align="center">Valor</TableCell>
-              <TableCell align="center">Event Name</TableCell>
-              <TableCell align="center">Event Type</TableCell>
-              <TableCell align="right">Remove Activity</TableCell>
+              <TableCell align="center">Event<br />Name</TableCell>
+              <TableCell align="center">Event<br />Type</TableCell>
+              <TableCell align="center">Remove<br />Activity</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

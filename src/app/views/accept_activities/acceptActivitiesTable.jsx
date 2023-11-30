@@ -77,8 +77,8 @@ const PendingBalanceTable = () => {
           <TableRow>
             <TableCell align="center">Activity</TableCell>
             <TableCell align="center">Event</TableCell>
-            <TableCell align="center">Pending balance</TableCell>
-            <TableCell align="center">Total balance</TableCell>
+            <TableCell align="center">Pending<br />balance</TableCell>
+            <TableCell align="center">Total<br />balance</TableCell>
             <TableCell align="center">Accepted</TableCell>
           </TableRow>
         </TableHead>
