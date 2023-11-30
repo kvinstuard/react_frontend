@@ -6,7 +6,7 @@ import {
   import { LoadingButton } from '@mui/lab';
   import { Alert, Snackbar } from "@mui/material";
   import { Span } from "app/components/Typography";
-  import { useState, useContext } from "react";
+  import { useState, useEffect, useContext } from "react";
   import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
   import * as utils from 'app/utils/utils';
   import React from "react";
@@ -17,7 +17,7 @@ import {
     marginBottom: "16px",
   }));
   
-  const PendingBalanceForm = () => {
+  const PendingBalanceForm = ({ selectedActivity }) => {
       const [state, setState] = useState({});
       const context = useContext(userContext)
       const [open, setOpen] = React.useState(false);
@@ -89,6 +89,15 @@ import {
       event.persist();
       setState({ ...state, [event.target.name]: event.target.value });
     };
+
+    useEffect(() => {
+      // Actualizar el estado cuando se seleccionan datos del datatable
+      if (selectedActivity) {
+        setState({
+          descripcion: selectedActivity.actividad || "",
+        });
+      }
+    }, [selectedActivity]);
   
     const {
       descripcion,
