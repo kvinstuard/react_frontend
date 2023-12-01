@@ -72,7 +72,7 @@ const PendingBalanceTable = () => {
   }
   return (
     <Box width="100%" overflow="auto">
-      <StyledTable>
+      <StyledTable responsive>
         <TableHead>
           <TableRow>
             <TableCell align="center">Event</TableCell>
