@@ -82,7 +82,8 @@ import {
           setErrMsg("Error:" + e)
           setMsgType("error")
         }
-        
+        //Limpiar los valores.
+        setState({...state, [event.target.descripcion]:""});
     };
   
     const handleChange = (event) => {
