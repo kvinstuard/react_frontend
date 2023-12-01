@@ -78,6 +78,10 @@ import {
         setErrMsg("Error:" + e)
         setMsgType("error")
       }
+      //Limpiar Formulario
+      setState({activityValor:""});
+      setState({activityDescription:""});
+      setState({eventName:""});
     };
   
   
