@@ -1,6 +1,8 @@
 import {
   Box,
   styled,
+  Icon,
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -22,7 +24,7 @@ const StyledTable = styled(Table)(({ theme }) => ({
   },
 }));
 
-const PendingBalanceTable = () => {
+const PendingBalanceTable = ({ setSelectedActivity }) => {
   
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -64,6 +66,10 @@ const PendingBalanceTable = () => {
     setPage(0);
   };
 
+  const handleFetch = (data) => {
+    setSelectedActivity(data)
+  }
+
   if (pendingBalanceList == null){
     return <p>No data found!.</p>;
   }
@@ -80,6 +86,7 @@ const PendingBalanceTable = () => {
             <TableCell align="center">Pending<br />balance</TableCell>
             <TableCell align="center">Total<br />balance</TableCell>
             <TableCell align="center">Accepted</TableCell>
+            <TableCell align="right">Fetch Data</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -92,6 +99,11 @@ const PendingBalanceTable = () => {
                 <TableCell align="center">${balance.saldo_pendiente}</TableCell>
                 <TableCell align="center">${balance.saldo_total}</TableCell>
                 <TableCell align="center">{balance.aceptado}</TableCell>
+                <TableCell align="right">
+                  <IconButton onClick={() => handleFetch(balance)}>
+                    <Icon color="info">edit</Icon>
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>
