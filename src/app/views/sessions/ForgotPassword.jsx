@@ -32,6 +32,7 @@ const ForgotPassword = () => {
 
   const handleFormSubmit = () => {
     console.log(email);
+    setEmail("");
   };
 
   return (

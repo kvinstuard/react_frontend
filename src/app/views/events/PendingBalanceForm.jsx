@@ -93,7 +93,9 @@ import {
           setErrMsg("Error:" + e)
           setMsgType("error")
         }
-        
+        //Limpiar Formulario
+        setState({descripcion:""});
+        setState({valorAPagar:""});
     };
   
     const handleChange = (event) => {

@@ -86,7 +86,8 @@ import {
           setErrMsg("Error:" + e)
           setMsgType("error")
         }
-        
+        //Limpiar Formulario
+        setState({email:""});
     };
   
     const handleChange = (event) => {

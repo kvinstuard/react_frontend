@@ -142,6 +142,10 @@ const SimpleForm = ({ selectedData }) => {
     setOpen(true)
     setErrMsg("Participant added successfully!")
     setMsgType("success")
+    //Limpiar Formulario
+    setState({activityDescription:""});
+    setState({email_contact:""});
+    setState({participation_value:""});
   };
 
 

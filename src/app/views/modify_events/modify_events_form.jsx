@@ -106,6 +106,12 @@ const SimpleForm = ({ selectedEvent }) => {
       setErrMsg("Error:" + e)
       setMsgType("error")
     }
+    //Limpiar Formulario
+    setState({eventNewName:""});
+    setState({eventOldName:""});
+    setState({eventDescription:""});
+    setState({eventType:""});
+    setState({eventPicture:""});
   };
 
 
