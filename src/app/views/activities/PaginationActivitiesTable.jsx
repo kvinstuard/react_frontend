@@ -138,14 +138,14 @@ import {
             {errMsg}
           </Alert>
         </Snackbar>
-        <StyledTable>
+        <StyledTable responsive>
           <TableHead>
             <TableRow>
               <TableCell align="left">Description</TableCell>
               <TableCell align="center">Valor</TableCell>
-              <TableCell align="center">Event Name</TableCell>
-              <TableCell align="center">Activity's Owner</TableCell>
-              <TableCell align="right">Remove Activity</TableCell>
+              <TableCell align="center">Event<br />Name</TableCell>
+              <TableCell align="center">Event<br />Type</TableCell>
+              <TableCell align="right">Remove<br />Activity</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
