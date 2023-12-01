@@ -30,10 +30,13 @@ const SimpleForm = ({ selectedData }) => {
   useEffect(() => {
     // Actualizar el estado cuando se seleccionan datos del datatable
     if (selectedData) {
-      let field_name = "activityDescription"
-      setState({ ...state, [field_name]: selectedData.actividad || "" });
+      setState({ 
+        activityDescription: selectedData.actividad || "",
+        email_contact: "",
+        participation_value: "",
+      });
     }
-  }, [selectedData, state]);
+  }, [selectedData]);
 
   function handleClose(_, reason) {
     if (reason === "clickaway") {
@@ -131,10 +134,10 @@ const SimpleForm = ({ selectedData }) => {
         }
       }
       catch (e) {
-        console.log("exception:", e)
+        console.error("exception:", e)
         setLoading(false);
         setOpen(true)
-        setErrMsg("Error:" + e)
+        setErrMsg("Error, por favor contacte a soporte!")
         setMsgType("error")
       }
     }

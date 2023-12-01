@@ -222,6 +222,44 @@ export const verSaldosPendientes = async (config) => {
 };
 
 /**
+* Para ver invitaciones enviadas por el usuario.
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verInvitacionesPendientes = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/sent/invitations/",
+    config
+  );
+  return data.json();
+};
+
+/**
+* Para ver invitaciones enviadas al usuario.
+* @param {JSON} config JSON = {
+    method: "GET",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+  };
+* @returns 
+*/
+export const verTusInvitacionesPendientes = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/view/your/invitations/",
+    config
+  );
+  return data.json();
+};
+
+/**
 * Paga un saldo pendiente parcial o totalmente de una actividad.
 * @param {JSON} config JSON = {
     method: "POST",
@@ -400,6 +438,26 @@ export const agregarParticipante = async (config) => {
 };
 
 /**
+* Manda una invitacion a un contacto para un evento.
+* @param {JSON} config JSON = {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${data.token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+* @returns 
+*/
+export const enviarInvitacion = async (config) => {
+  const data = await fetch(
+    "http://127.0.0.1:8000/add/contact/event/",
+    config
+  );
+  return data.json();
+};
+
+/**
 * Muestra todas las actividades de todos los eventos creados de un usuario
 * @param {JSON} config JSON = {
     method: "GET",
@@ -449,9 +507,9 @@ export const verTodasLosParticipantesDeEventos = async (config) => {
   };
 * @returns 
 */
-export const aceptarActividad = async (config) => {
+export const aceptarInvitacion = async (config) => {
   const data = await fetch(
-    "http://127.0.0.1:8000/accept/activity/",
+    "http://127.0.0.1:8000/accept/invitation/",
     config
   );
   return data.json();

@@ -2,10 +2,10 @@ import Loadable from 'app/components/Loadable';
 import { lazy } from 'react';
 
 const NotFound = Loadable(lazy(()=> import('./NotFound')));
-const AcceptInvitation = Loadable(lazy(()=> import('./acceptActivities')));
+const SendInvitation = Loadable(lazy(()=> import('./send_invitation.jsx')));
 
 const eventRoutes = [
-    { path: '/accept/invitation', element: <AcceptInvitation /> },
+    { path: '/send/invitation', element: <SendInvitation /> },
     { path: '/events/404', element: <NotFound /> },
 ];
     

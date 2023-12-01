@@ -115,9 +115,9 @@ import {
         console.log("response:", response)
       }
       catch (e) {
-        console.log("exception:", e)
+        console.error("exception:", e)
         setOpen(true)
-        setErrMsg("Error:" + e)
+        setErrMsg("Error, por favor contacte a soporte!")
         setMsgType("error")
       }
     };
