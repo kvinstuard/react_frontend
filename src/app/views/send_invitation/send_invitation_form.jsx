@@ -1,8 +1,6 @@
 import {
-  Typography,
   Grid,
   Icon,
-  Autocomplete,
   styled,
 } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
@@ -20,20 +18,9 @@ const TextField = styled(TextValidator)(() => ({
   marginBottom: "16px",
 }));
 
-const SimpleForm = ({ selectedEvent }) => {
+const SimpleForm = ({ selectedData }) => {
   // const navigate = useNavigate();
   const [state, setState] = useState({});
-  const suggestions = [
-    'VIAJE',
-    'HOGAR',
-    'PAREJA',
-    'COMIDA',
-    'OTRO',
-  ];
-  const AutoComplete = styled(Autocomplete)(() => ({
-    width: 300,
-    marginBottom: '16px',
-  }));
   const [open, setOpen] = React.useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [msgType, setMsgType] = useState("error");
@@ -42,16 +29,13 @@ const SimpleForm = ({ selectedEvent }) => {
 
   useEffect(() => {
     // Actualizar el estado cuando se seleccionan datos del datatable
-    if (selectedEvent) {
-      setState({
-        eventNewName: selectedEvent.evento || "",
-        eventOldName: selectedEvent.evento || "",
-        eventDescription: selectedEvent.evento_descripcion || "",
-        eventType: selectedEvent.evento_tipo || "",
-        eventPicture: selectedEvent.evento_foto || "",
+    if (selectedData) {
+      setState({ 
+        eventName: selectedData.evento || "",
+        email_contact: "",
       });
     }
-  }, [selectedEvent]);
+  }, [selectedData]);
 
   function handleClose(_, reason) {
     if (reason === "clickaway") {
@@ -63,18 +47,15 @@ const SimpleForm = ({ selectedEvent }) => {
   const handleSubmit = async (event) => {
     setLoading(true);
 
-    // se configura el cuerpo de la consulta para crear el evento en la BD
+    // se configura el cuerpo de la consulta para crear el evento en la BD.
     const body = {
-      "nombre": eventNewName,
-      "nombre_antiguo": eventOldName,
-      "descripcion": eventDescription,
-      "tipo": eventType,
-      "foto": eventPicture
+      "nombre": eventName,
+      "email_contacto": email_contact,
     };
     
     console.log("context:", context)
     const config = {
-      method: "PUT",
+      method: "POST",
       headers: {
         Authorization: `Token ${context.token}`,
         "Content-type": "application/json",
@@ -84,7 +65,7 @@ const SimpleForm = ({ selectedEvent }) => {
     console.log("body:", body)
     console.log("event:", event)
     try {
-      let response = await utils.modificarEvento(config)
+      let response = await utils.enviarInvitacion(config)
       setLoading(false);
       if (response.error){
         setOpen(true)
@@ -93,11 +74,11 @@ const SimpleForm = ({ selectedEvent }) => {
         return ;
       }
       else {
+        // Si se completó todo, hubó éxito.
         setOpen(true)
-        setErrMsg("Event modified successfully!")
+        setErrMsg("Participant added successfully!")
         setMsgType("success")
       }
-      // navigate("/")
     }
     catch (e) {
       console.error("exception:", e)
@@ -115,19 +96,9 @@ const SimpleForm = ({ selectedEvent }) => {
     console.log(state)
   };
 
-  const handleChangeType = async (newValue) => {
-    console.log(newValue);
-    let name = "eventType"
-    setState({ ...state, [name]: newValue });
-    console.log(state)
-  };
-
   const {
-    eventNewName,
-    eventOldName,
-    eventDescription,
-    eventType,
-    eventPicture,
+    eventName,
+    email_contact,
   } = state;
 
   return (
@@ -143,74 +114,33 @@ const SimpleForm = ({ selectedEvent }) => {
             
             <TextField
               type="text"
-              name="eventNewName"
-              label="Event New Name"
+              name="eventName"
+              label="Event name"
               onChange={handleChange}
-              value={eventNewName || ""}
+              value={eventName || ""}
               validators={["required"]}
               errorMessages={["this field is required"]}
             />
 
             <TextField
               type="text"
-              name="eventOldName"
-              label="Event Old Name"
+              name="email_contact"
+              label="Contact's email"
               onChange={handleChange}
-              value={eventOldName || ""}
+              value={email_contact || ""}
               validators={["required"]}
               errorMessages={["this field is required"]}
-            />
-
-            <TextField
-              type="text"
-              name="eventDescription"
-              label="Event Description"
-              onChange={handleChange}
-              value={eventDescription || ""}
-              validators={["required"]}
-              errorMessages={["this field is required"]}
+              // validators={['required', 'isEmail']}
+              // errorMessages={['this field is required', 'email is not valid']}
             />
 
           </Grid>
 
-          <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
-            
-            <AutoComplete
-              options={suggestions}
-              getOptionLabel={(option) => option}
-              onChange={(event, newValue) => handleChangeType(newValue)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  type="text"
-                  name="eventType"
-                  label="Type of Event"
-                />
-              )}
-              value={eventType || ""}
-            />
-
-            <TextField
-              name="eventPicture"
-              type="text"
-              label="Image URL"
-              value={eventPicture || ""}
-              onChange={handleChange}
-              validators={["required"]}
-              errorMessages={["this field is required"]}
-              sx={{ mt: -2 }}
-            />
-            
-            <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'center'}}>
-              Please, insert a valid image URL.
-            </Typography>
-
-          </Grid>
         </Grid>
 
         <LoadingButton color="primary" variant="contained" type="submit" loading={loading}>
           <Icon>send</Icon>
-          <Span sx={{ pl: 1, textTransform: "capitalize" }}>Modify Event</Span>
+          <Span sx={{ pl: 1, textTransform: "capitalize" }}>Add Contact</Span>
         </LoadingButton>
       </ValidatorForm>
     </div>

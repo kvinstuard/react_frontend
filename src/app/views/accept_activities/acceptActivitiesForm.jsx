@@ -46,7 +46,7 @@ import {
         let usuario = context.user_data
         console.log("context:",usuario)
         const body = {
-          "descripcion": descripcion,
+          "nombre": descripcion,
         }
         console.log("body:",  body)
         console.log("state:", state)
@@ -60,7 +60,7 @@ import {
           body: JSON.stringify(body),
         };
         try {
-          let response = await utils.aceptarActividad(config)
+          let response = await utils.aceptarInvitacion(config)
           setLoading(false);
           if (response.error){
             setOpen(true)
@@ -76,10 +76,10 @@ import {
           console.log("response:", response)
         }
         catch (e) {
-          console.log("exception:", e)
+          console.error("exception:", e)
           setLoading(false);
           setOpen(true)
-          setErrMsg("Error:" + e)
+          setErrMsg("Error, por favor contacte a soporte!")
           setMsgType("error")
         }
         
@@ -94,7 +94,7 @@ import {
       // Actualizar el estado cuando se seleccionan datos del datatable
       if (selectedActivity) {
         setState({
-          descripcion: selectedActivity.actividad || "",
+          descripcion: selectedActivity.evento || "",
         });
       }
     }, [selectedActivity]);
@@ -117,7 +117,7 @@ import {
               <TextField
                 type="text"
                 name="descripcion"
-                label="Activity's description"
+                label="Event's name"
                 onChange={handleChange}
                 value={descripcion || ""}
                 validators={["required"]}

@@ -20,14 +20,14 @@ const MyPendingBalance = () => {
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Events", path: "/accept/activities" }, { name: "Accept" }]} />
+        <Breadcrumb routeSegments={[{ name: "Events", path: "/accept/invitation" }, { name: "Accept" }]} />
       </Box>
     <Stack spacing={3}>
-      <SimpleCard title="Accept Activities Form">
+      <SimpleCard title="Accept Invitations Form">
         <AcceptActivitiesForm selectedActivity={selectedActivity} />
       </SimpleCard>
 
-      <SimpleCard title="Activities's invitations">
+      <SimpleCard title="All my invitations">
         <AcceptActivitiesTable setSelectedActivity={setSelectedActivity} />
       </SimpleCard>
     </Stack>
