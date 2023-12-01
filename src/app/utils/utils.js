@@ -122,6 +122,7 @@ export const createUser = async (config) => {
     "http://127.0.0.1:8000/crear/usuario/",
     config
   );
+  console.log("data:",data)
   return data.json();
 };
 
