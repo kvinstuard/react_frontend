@@ -87,10 +87,10 @@ const SimpleForm = () => {
       // navigate("/")
     }
     catch (e) {
-      console.log("exception:", e)
+      console.error("exception:", e)
       setLoading(false);
       setOpen(true)
-      setErrMsg("Error:" + e)
+      setErrMsg("Error, por favor contacte a soporte!")
       setMsgType("error")
     }
   };

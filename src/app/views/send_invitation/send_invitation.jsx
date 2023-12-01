@@ -2,8 +2,8 @@ import { Stack, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { Breadcrumb, SimpleCard } from "app/components";
 import { useState } from "react";
-import ModifyEventsForm from "./modify_events_form";
-import ModifyEventsTable from "./ModifyEventsTable";
+import SendInvitationForm from "./send_invitation_form";
+import SendInvitationTable from "./SendInvitationTable";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
@@ -15,24 +15,23 @@ const Container = styled("div")(({ theme }) => ({
 }));
 
 const AppForm = () => {
-  const [selectedEvent, setSelectedEvent] = useState(null)
+  const [selectedData, setSelectedData] = useState(null)
 
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Event", path: "/modify/events" }, { name: "Modify" }]} />
+        <Breadcrumb routeSegments={[{ name: "Event", path: "/send/invitation" }, { name: "Send invitations" }]} />
       </Box>
 
       <Stack spacing={3}>
-        <SimpleCard title="Modify Events Form">
-          <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'left'}}>
-            NOTE: if you don't want to modify event's name or another field, just copy 
-            and past the same value in the corresponding field. Please don't type blank spaces.
-          </Typography>
-          <ModifyEventsForm selectedEvent={selectedEvent} />
+        <SimpleCard title="Send Invitations Form">
+          <SendInvitationForm selectedData={selectedData} />
         </SimpleCard>
-        <SimpleCard title="Created Events">
-          <ModifyEventsTable setSelectedEvent={setSelectedEvent} />
+        <SimpleCard title="Sent invitations">
+          <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'left'}}>
+            You can see here all your sent invitations.
+          </Typography>
+          <SendInvitationTable setSelectedData={setSelectedData} />
         </SimpleCard>
       </Stack>
     </Container>

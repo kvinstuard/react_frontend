@@ -1,8 +1,8 @@
 import {
   Box,
-  styled,
   Icon,
   IconButton,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -13,6 +13,7 @@ import {
 import { useState, useEffect, useContext } from "react";
 import * as utils from 'app/utils/utils';
 import { userContext } from "../../contexts/user-context";
+import React from "react";
 
 const StyledTable = styled(Table)(({ theme }) => ({
   whiteSpace: "pre",
@@ -24,16 +25,15 @@ const StyledTable = styled(Table)(({ theme }) => ({
   },
 }));
 
-const PendingBalanceTable = ({ setSelectedBalance }) => {
-  
+const PendingBalanceTable = ({ setSelectedData }) => {
+  const context = useContext(userContext);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const context = useContext(userContext);
-  const [pendingBalanceList, setPendingBalanceList] = useState([]);
+  const [createdEvents, setCreatedEvents] = useState([])
 
   useEffect(() => {
-    const configLista = async () => {
-      // Se obtienen los saldos pendientes del usuario
+    const fetchData = async () => {
+      // Se obtienen los eventos creados por el usuario.
       const usuario = context.user_data;
       console.log("AuthContext:", usuario)
 
@@ -46,16 +46,16 @@ const PendingBalanceTable = ({ setSelectedBalance }) => {
       };
 
       try {
-        const response = await utils.verSaldosPendientes(config);
-        console.log("response:", response.eventos_actividades)
-        await setPendingBalanceList(response.eventos_actividades);
+        const response = await utils.verInvitacionesPendientes(config);
+        console.log("response:", response.eventos)
+        await setCreatedEvents(response.eventos);
       } catch (error) {
         console.error("Error:", error);
       }
     };
 
-    configLista();
-  }, [context.user_data, context.token, pendingBalanceList]);
+    fetchData();
+  }, [context.user_data, context.token, createdEvents]);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -67,40 +67,38 @@ const PendingBalanceTable = ({ setSelectedBalance }) => {
   };
 
   const handleFetch = (data) => {
-    setSelectedBalance(data)
+    setSelectedData(data)
   }
 
-  if (pendingBalanceList == null){
+  if (createdEvents == null){
     return <p>No data found!.</p>;
   }
-  else if (pendingBalanceList.length === 0) {
+  else if (createdEvents.length === 0) {
     return <p>No data found!.</p>;
   }
   return (
     <Box width="100%" overflow="auto">
-      <StyledTable responsive>
+      <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="center">Activity</TableCell>
             <TableCell align="center">Event</TableCell>
-            <TableCell align="center">Pending<br />balance</TableCell>
-            <TableCell align="center">Total<br />balance</TableCell>
+            <TableCell align="center">Participant's Username</TableCell>
+            <TableCell align="center">Event's Creator</TableCell>
             <TableCell align="center">Accepted</TableCell>
             <TableCell align="right">Fetch Data</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {pendingBalanceList
+          {createdEvents
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((balance, index) => (
+            .map((events, index) => (
               <TableRow key={index}>
-                <TableCell align="center">{balance.actividad}</TableCell>
-                <TableCell align="center">{balance.evento}</TableCell>
-                <TableCell align="center">${balance.saldo_pendiente}</TableCell>
-                <TableCell align="center">${balance.saldo_total}</TableCell>
-                <TableCell align="center">{balance.aceptado}</TableCell>
+                <TableCell align="center">{events.evento}</TableCell>
+                <TableCell align="center">{events.usuario_participante}</TableCell>
+                <TableCell align="center">{events.evento_creador}</TableCell>
+                <TableCell align="center">{events.aceptado}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleFetch(balance)}>
+                  <IconButton onClick={() => handleFetch(events)}>
                     <Icon color="info">edit</Icon>
                   </IconButton>
                 </TableCell>
@@ -114,7 +112,7 @@ const PendingBalanceTable = ({ setSelectedBalance }) => {
         page={page}
         component="div"
         rowsPerPage={rowsPerPage}
-        count={pendingBalanceList.length}
+        count={createdEvents.length}
         onPageChange={handleChangePage}
         rowsPerPageOptions={[5, 10, 25]}
         onRowsPerPageChange={handleChangeRowsPerPage}
