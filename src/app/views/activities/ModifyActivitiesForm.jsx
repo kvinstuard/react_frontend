@@ -6,7 +6,7 @@ import {
   import { LoadingButton } from '@mui/lab';
   import { Span } from "app/components/Typography";
   import { Alert, Snackbar } from "@mui/material";
-  import { useState, useContext } from "react";
+  import { useState, useEffect, useContext } from "react";
   import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
   import * as utils from 'app/utils/utils';
   // import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ import {
     marginBottom: "16px",
   }));
   
-  const CreateActivitiesForm = () => {
+  const CreateActivitiesForm = ({ selectedActivity }) => {
     // const navigate = useNavigate();
     const [state, setState] = useState({});
     const [open, setOpen] = React.useState(false);
@@ -27,6 +27,17 @@ import {
     const context = useContext(userContext);
     const [loading, setLoading] = useState(false);
   
+    useEffect(() => {
+      // Actualizar el estado cuando se seleccionan datos del datatable
+      if (selectedActivity) {
+        setState({
+          activityValor: selectedActivity.actividad_valor || "",
+          activityNewDescription: selectedActivity.actividad || "",
+          activityOldDescription: selectedActivity.actividad || "",
+        });
+      }
+    }, [selectedActivity]);
+
     function handleClose(_, reason) {
       if (reason === "clickaway") {
         return;

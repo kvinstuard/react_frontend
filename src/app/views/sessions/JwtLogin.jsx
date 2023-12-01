@@ -109,20 +109,18 @@ const JwtLogin = () => {
         setMsgType("success")
       }
       console.log("response:", response)
-
       // Actualiza el contexto
       console.log("contexto antes:",context)
       console.log("valores: 1.",response.description.token,
       "2." ,response.description.user_details)
       await context.setUserToken(response.description.token);
       await context.setUserData(response.description.user_details)
-
+      
       console.log("contexto despues:",context)
 
       // se redirige al dashboard
       await login("jason@ui-lib.com", "dummyPass")
       navigate('/dashboard');
-
     } catch (e) {
       console.log("exception:", e)
       setOpen(true)

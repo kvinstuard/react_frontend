@@ -6,7 +6,7 @@ import {
 import { LoadingButton } from '@mui/lab';
 import { Span } from "app/components/Typography";
 import { Alert, Snackbar } from "@mui/material";
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import * as utils from 'app/utils/utils';
 // import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ const TextField = styled(TextValidator)(() => ({
   marginBottom: "16px",
 }));
 
-const SimpleForm = () => {
+const SimpleForm = ({ selectedData }) => {
   // const navigate = useNavigate();
   const [state, setState] = useState({});
   const [open, setOpen] = React.useState(false);
@@ -26,6 +26,14 @@ const SimpleForm = () => {
   const [msgType, setMsgType] = useState("error");
   const context = useContext(userContext);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Actualizar el estado cuando se seleccionan datos del datatable
+    if (selectedData) {
+      let field_name = "activityDescription"
+      setState({ ...state, [field_name]: selectedData.actividad || "" });
+    }
+  }, [selectedData, state]);
 
   function handleClose(_, reason) {
     if (reason === "clickaway") {
