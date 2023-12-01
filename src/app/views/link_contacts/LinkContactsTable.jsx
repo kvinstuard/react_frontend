@@ -138,14 +138,14 @@ const PendingBalanceTable = ({ setSelectedData }) => {
             {errMsg}
           </Alert>
       </Snackbar>
-      <StyledTable>
+      <StyledTable responsive>
         <TableHead>
           <TableRow>
             <TableCell align="center">Activity</TableCell>
             <TableCell align="center">Event</TableCell>
-            <TableCell align="center">Participantion value</TableCell>
-            <TableCell align="center">Participant's Username</TableCell>
-            <TableCell align="center">Event's Creator</TableCell>
+            <TableCell align="center">Participantion<br />value</TableCell>
+            <TableCell align="center">Participant's<br />Username</TableCell>
+            <TableCell align="center">Event's<br />Creator</TableCell>
             <TableCell align="center">Accepted</TableCell>
             <TableCell align="center">Remove</TableCell>
             <TableCell align="right">Fetch Data</TableCell>
